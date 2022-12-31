@@ -25,7 +25,7 @@ const Layout: React.FC<LayoutProps> = ({ title, children }) => {
         <GridItem minH="100%">
           <Navbar />
         </GridItem>
-        <GridItem>
+        <GridItem height="100vh" overflowY="auto">
           <main>{children}</main>
         </GridItem>
       </Grid>
