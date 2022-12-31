@@ -37,7 +37,7 @@ const Navbar: React.FC = () => {
             _hover={{ bg: "rgba(221,226,255, 0.08)" }}
           >
             <Icon h={30} w={30} as={icon} />
-            <Text ml={0}>{title}</Text>
+            <Text ml={10}>{title}</Text>
           </Flex>
         </Link>
       ))}
