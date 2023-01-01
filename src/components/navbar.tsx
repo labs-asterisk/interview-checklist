@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import { Flex, Icon, Text } from "@chakra-ui/react";
+import { Flex, Icon, Text, Button } from "@chakra-ui/react";
 
 import { MdHome, MdQuestionAnswer, MdNoteAlt } from "react-icons/md";
 
@@ -43,6 +43,9 @@ const Navbar: React.FC = () => {
           </Flex>
         </Link>
       ))}
+      <Button colorScheme="blue" size="lg">
+        Sign in with Google
+      </Button>
     </Flex>
   );
 };

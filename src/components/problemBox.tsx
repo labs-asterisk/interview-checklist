@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { render } from "react-dom";
 
-import { type Problem } from "../types/problem-data";
+import { Difficulty, type Problem } from "../types/problem-data";
 
 import {
   Box,
   Text,
+  Flex,
   Popover,
   PopoverTrigger,
   PopoverContent,
@@ -15,33 +16,61 @@ import {
   PopoverBody,
 } from "@chakra-ui/react";
 
-const HoverPanel = () => {
-  return (
-    <Box
-      position="absolute"
-      width="120px"
-      height="120px"
-      bgColor="green"
-      borderRadius="5px"
-      mt={5}
-      p={5}
-      // top="100%"
-      // left="50%"
-      // marginLeft="-60px"
-      zIndex={30}
-    >
-      {/* <Text>hi</Text> */}
-    </Box>
-  );
+interface TagsBoxProps {
+  difficulty: Difficulty;
+  typeTags: string[];
+}
 
-  // return (
-  //   <div>
-  //     Hovering right meow!
-  //     <span role="img" aria-label="cat">
-  //       🐱
-  //     </span>
-  //   </div>
-  // );
+const TagsBox: React.FC<TagsBoxProps> = ({ difficulty, typeTags }) => {
+  const bgColor =
+    difficulty === "Easy"
+      ? "#2A3C3B"
+      : difficulty === "Medium"
+      ? "#493F2A"
+      : "#482C30";
+
+  const textColor =
+    difficulty === "Easy"
+      ? "#00B9A3"
+      : difficulty === "Medium"
+      ? "#FEC11C"
+      : "#FE365F";
+
+  return (
+    <Flex width="100%" flexWrap="wrap" alignItems="center" gap={2}>
+      <Box
+        // flex={1}
+        px={3}
+        py={1}
+        borderRadius="20px"
+        bgColor={bgColor}
+        textColor={textColor}
+      >
+        <Text
+          fontSize="14px"
+          whiteSpace="nowrap"
+          align="center"
+          fontWeight="bold"
+        >
+          {difficulty}
+        </Text>
+      </Box>
+      {typeTags.map((typeTag) => (
+        <Box
+          // flex={1}
+          px={3}
+          py={1}
+          bgColor="#3F3E3F"
+          borderRadius="20px"
+          textColor="#C3C4C8"
+        >
+          <Text fontSize="14px" whiteSpace="nowrap" align="center">
+            {typeTag}
+          </Text>
+        </Box>
+      ))}
+    </Flex>
+  );
 };
 
 interface ProblemBoxProps {
@@ -82,13 +111,19 @@ const ProblemBox: React.FC<ProblemBoxProps> = ({
             {/* {isHovering && <HoverPanel />} */}
           </Box>
         </PopoverTrigger>
-        <PopoverContent>
-          <PopoverArrow />
+        <PopoverContent
+          p={1}
+          bg="#282828"
+          textColor="white"
+          borderColor="#282828"
+        >
+          <PopoverArrow bg="#282828" />
           {/* <PopoverCloseButton /> */}
-          <PopoverHeader>Confirmation!</PopoverHeader>
-          <PopoverBody>
-            Are you sure you want to have that milkshake?
-          </PopoverBody>
+          <PopoverHeader borderBottomWidth={0}>
+            <TagsBox difficulty={difficulty} typeTags={tags} />
+          </PopoverHeader>
+          {/* <PopoverBody>
+          </PopoverBody> */}
         </PopoverContent>
       </Popover>
     </>
