@@ -26,15 +26,15 @@ const TagsBox: React.FC<TagsBoxProps> = ({ difficulty, typeTags }) => {
     difficulty === "Easy"
       ? "#2A3C3B"
       : difficulty === "Medium"
-      ? "#493F2A"
-      : "#482C30";
+        ? "#493F2A"
+        : "#482C30";
 
   const textColor =
     difficulty === "Easy"
       ? "#00B9A3"
       : difficulty === "Medium"
-      ? "#FEC11C"
-      : "#FE365F";
+        ? "#FEC11C"
+        : "#FE365F";
 
   return (
     <Flex width="100%" flexWrap="wrap" alignItems="center" gap={2}>
@@ -86,30 +86,23 @@ const ProblemBox: React.FC<ProblemBoxProps> = ({
     <>
       <Popover isLazy trigger="hover">
         <PopoverTrigger>
-          <Box
+          <Flex
             onMouseOver={() => setIsHovering(true)}
             onMouseOut={() => setIsHovering(false)}
-            flex={1}
-            p={3}
-            borderRadius="5px"
-            bgColor="papayawhip"
             position="relative"
-            display="inline-block"
             userSelect="none"
             cursor="pointer"
-            transition="all 0.3s ease-in"
+            height="100%"
+            width="100%"
+            alignItems="center"
+            justifyContent="center"
             zIndex={1}
-            _hover={{
-              transform: "translateY(-1px)",
-              boxShadow:
-                "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
-            }}
           >
-            <Text fontSize="12px" whiteSpace="nowrap" align="center">
+            <Text fontSize="12px" textAlign="center">
               {name}
             </Text>
             {/* {isHovering && <HoverPanel />} */}
-          </Box>
+          </Flex>
         </PopoverTrigger>
         <PopoverContent
           p={1}
