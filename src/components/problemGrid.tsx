@@ -8,14 +8,12 @@ import { type Problem } from "../types/problem-data";
 
 const ProblemGrid: React.FC = () => {
   return (
-    <Box p={10}>
+    <Box p={4}>
       {probs.sections.map(({ sectionName, problems }) => (
         // <div>{JSON.stringify(section)}</div>
         <Box>
-          <Text ml={5} fontSize="40px">
-            {sectionName}
-          </Text>
-          <Flex width="100%" flexWrap="wrap" alignItems="center" gap={8}>
+          <Text fontSize="40px">{sectionName}</Text>
+          <Flex width="100%" flexWrap="wrap" alignItems="center" gap={2}>
             {problems.map((problem) => (
               <ProblemBox problem={problem as Problem} />
             ))}

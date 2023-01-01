@@ -24,20 +24,22 @@ const Navbar: React.FC = () => {
       flexDir="column"
       bg={"linear-gradient(to right, #222B3E, #0F1B32)"}
       textColor="white"
-      p={10}
+      p={3}
     >
       {navItems.map(({ title, href, icon }) => (
         <Link href={href}>
           <Flex
-            mb={10}
-            p={10}
+            mb={3}
+            p={3}
             borderRadius="5px"
             alignItems="center"
             transition="all 0.2s ease-in-out"
             _hover={{ bg: "rgba(221,226,255, 0.08)" }}
           >
-            <Icon h={30} w={30} as={icon} />
-            <Text ml={10}>{title}</Text>
+            <Icon boxSize={7} as={icon} />
+            <Text ml={3} fontSize="16px">
+              {title}
+            </Text>
           </Flex>
         </Link>
       ))}

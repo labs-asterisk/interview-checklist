@@ -3,7 +3,17 @@ import { render } from "react-dom";
 
 import { type Problem } from "../types/problem-data";
 
-import { Box, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Text,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverArrow,
+  PopoverCloseButton,
+  PopoverHeader,
+  PopoverBody,
+} from "@chakra-ui/react";
 
 const HoverPanel = () => {
   return (
@@ -20,7 +30,7 @@ const HoverPanel = () => {
       // marginLeft="-60px"
       zIndex={30}
     >
-      <Text>LOLOLOLOLOL</Text>
+      {/* <Text>hi</Text> */}
     </Box>
   );
 
@@ -44,32 +54,44 @@ const ProblemBox: React.FC<ProblemBoxProps> = ({
   const [isHovering, setIsHovering] = useState(false);
 
   return (
-    <div>
-      <Box
-        onMouseOver={() => setIsHovering(true)}
-        onMouseOut={() => setIsHovering(false)}
-        flex={1}
-        p={10}
-        borderRadius="5px"
-        bgColor="papayawhip"
-        position="relative"
-        display="inline-block"
-        userSelect="none"
-        cursor="pointer"
-        transition="all 0.3s ease-in"
-        zIndex={1}
-        _hover={{
-          transform: "translateY(-1px)",
-          boxShadow:
-            "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
-        }}
-      >
-        <Text fontSize="14px" whiteSpace="nowrap" align="center">
-          {name}
-        </Text>
-      </Box>
-      {isHovering && <HoverPanel />}
-    </div>
+    <>
+      <Popover isLazy trigger="hover">
+        <PopoverTrigger>
+          <Box
+            onMouseOver={() => setIsHovering(true)}
+            onMouseOut={() => setIsHovering(false)}
+            flex={1}
+            p={3}
+            borderRadius="5px"
+            bgColor="papayawhip"
+            position="relative"
+            display="inline-block"
+            userSelect="none"
+            cursor="pointer"
+            transition="all 0.3s ease-in"
+            zIndex={1}
+            _hover={{
+              transform: "translateY(-1px)",
+              boxShadow:
+                "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
+            }}
+          >
+            <Text fontSize="12px" whiteSpace="nowrap" align="center">
+              {name}
+            </Text>
+            {/* {isHovering && <HoverPanel />} */}
+          </Box>
+        </PopoverTrigger>
+        <PopoverContent>
+          <PopoverArrow />
+          {/* <PopoverCloseButton /> */}
+          <PopoverHeader>Confirmation!</PopoverHeader>
+          <PopoverBody>
+            Are you sure you want to have that milkshake?
+          </PopoverBody>
+        </PopoverContent>
+      </Popover>
+    </>
   );
 };
 
