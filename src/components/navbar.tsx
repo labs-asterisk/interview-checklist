@@ -7,13 +7,8 @@ import { signIn, signOut, useSession } from "next-auth/react";
 
 const navItems = [
   {
-    title: "Home",
-    href: "/",
-    icon: MdHome,
-  },
-  {
     title: "Problems",
-    href: "/problems",
+    href: "/",
     icon: MdNoteAlt,
   },
 ];
@@ -32,6 +27,7 @@ const Navbar: React.FC = () => {
       p={3}
       minH="100%">
       <Flex
+        width="100%"
         flex={1}
         flexDir="column"
       >
