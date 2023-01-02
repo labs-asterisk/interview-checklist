@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { render } from "react-dom";
+import Link from "next/link";
 
 import { Difficulty, type Problem } from "../types/problem-data";
 
@@ -16,6 +16,8 @@ import {
   PopoverBody,
 } from "@chakra-ui/react";
 
+import { ExternalLinkIcon } from "@chakra-ui/icons";
+
 interface TagsBoxProps {
   difficulty: Difficulty;
   typeTags: string[];
@@ -26,15 +28,15 @@ const TagsBox: React.FC<TagsBoxProps> = ({ difficulty, typeTags }) => {
     difficulty === "Easy"
       ? "#2A3C3B"
       : difficulty === "Medium"
-        ? "#493F2A"
-        : "#482C30";
+      ? "#493F2A"
+      : "#482C30";
 
   const textColor =
     difficulty === "Easy"
       ? "#00B9A3"
       : difficulty === "Medium"
-        ? "#FEC11C"
-        : "#FE365F";
+      ? "#FEC11C"
+      : "#FE365F";
 
   return (
     <Flex width="100%" flexWrap="wrap" alignItems="center" gap={2}>
@@ -63,6 +65,7 @@ const TagsBox: React.FC<TagsBoxProps> = ({ difficulty, typeTags }) => {
           bgColor="#3F3E3F"
           borderRadius="20px"
           textColor="#C3C4C8"
+          key={typeTag}
         >
           <Text fontSize="14px" whiteSpace="nowrap" align="center">
             {typeTag}
@@ -84,7 +87,13 @@ const ProblemBox: React.FC<ProblemBoxProps> = ({
 
   return (
     <>
-      <Popover isLazy trigger="hover">
+      <Popover
+        isLazy
+        trigger="hover"
+        openDelay={10}
+        closeDelay={10}
+        onOpen={() => console.log("hello")}
+      >
         <PopoverTrigger>
           <Flex
             onMouseOver={() => setIsHovering(true)}
@@ -98,10 +107,21 @@ const ProblemBox: React.FC<ProblemBoxProps> = ({
             justifyContent="center"
             zIndex={1}
           >
-            <Text fontSize="12px" textAlign="center">
-              {name}
-            </Text>
-            {/* {isHovering && <HoverPanel />} */}
+            <Link href={link} target="_blank">
+              <Text fontSize="12px" textAlign="center">
+                {name}{" "}
+                <ExternalLinkIcon
+                  // visibility={isHovering ? "visible" : "hidden"}
+                  display={isHovering ? "inline" : "none"}
+                />
+              </Text>
+            </Link>
+            {/* <Flex alignItems="center" gap={1}>
+              <Text fontSize="12px" textAlign="center">
+                {name}
+              </Text>
+              {isHovering ? <ExternalLinkIcon /> : <></>}
+            </Flex> */}
           </Flex>
         </PopoverTrigger>
         <PopoverContent
