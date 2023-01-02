@@ -21,9 +21,14 @@ import { ExternalLinkIcon } from "@chakra-ui/icons";
 interface TagsBoxProps {
   difficulty: Difficulty;
   typeTags: string[];
+  otherCompaniesTags: (string | number)[][];
 }
 
-const TagsBox: React.FC<TagsBoxProps> = ({ difficulty, typeTags }) => {
+const TagsBox: React.FC<TagsBoxProps> = ({
+  difficulty,
+  typeTags,
+  otherCompaniesTags,
+}) => {
   const bgColor =
     difficulty === "Easy"
       ? "#2A3C3B"
@@ -41,7 +46,6 @@ const TagsBox: React.FC<TagsBoxProps> = ({ difficulty, typeTags }) => {
   return (
     <Flex width="100%" flexWrap="wrap" alignItems="center" gap={2}>
       <Box
-        // flex={1}
         px={3}
         py={1}
         borderRadius="20px"
@@ -57,9 +61,9 @@ const TagsBox: React.FC<TagsBoxProps> = ({ difficulty, typeTags }) => {
           {difficulty}
         </Text>
       </Box>
+
       {typeTags.map((typeTag) => (
         <Box
-          // flex={1}
           px={3}
           py={1}
           bgColor="#3F3E3F"
@@ -69,6 +73,21 @@ const TagsBox: React.FC<TagsBoxProps> = ({ difficulty, typeTags }) => {
         >
           <Text fontSize="14px" whiteSpace="nowrap" align="center">
             {typeTag}
+          </Text>
+        </Box>
+      ))}
+
+      {otherCompaniesTags.map(([cmpName, cmpOcc]) => (
+        <Box
+          px={3}
+          py={1}
+          bgColor="#3F3E3F"
+          borderRadius="20px"
+          textColor="#C3C4C8"
+          key={cmpName}
+        >
+          <Text fontSize="14px" whiteSpace="nowrap" align="center">
+            {`${cmpName} (x${cmpOcc})`}
           </Text>
         </Box>
       ))}
@@ -110,18 +129,9 @@ const ProblemBox: React.FC<ProblemBoxProps> = ({
             <Link href={link} target="_blank">
               <Text fontSize="12px" textAlign="center">
                 {name}{" "}
-                <ExternalLinkIcon
-                  // visibility={isHovering ? "visible" : "hidden"}
-                  display={isHovering ? "inline" : "none"}
-                />
+                <ExternalLinkIcon display={isHovering ? "inline" : "none"} />
               </Text>
             </Link>
-            {/* <Flex alignItems="center" gap={1}>
-              <Text fontSize="12px" textAlign="center">
-                {name}
-              </Text>
-              {isHovering ? <ExternalLinkIcon /> : <></>}
-            </Flex> */}
           </Flex>
         </PopoverTrigger>
         <PopoverContent
@@ -131,12 +141,13 @@ const ProblemBox: React.FC<ProblemBoxProps> = ({
           borderColor="#282828"
         >
           <PopoverArrow bg="#282828" />
-          {/* <PopoverCloseButton /> */}
           <PopoverHeader borderBottomWidth={0}>
-            <TagsBox difficulty={difficulty} typeTags={tags} />
+            <TagsBox
+              difficulty={difficulty}
+              typeTags={tags}
+              otherCompaniesTags={otherCompanies}
+            />
           </PopoverHeader>
-          {/* <PopoverBody>
-          </PopoverBody> */}
         </PopoverContent>
       </Popover>
     </>
