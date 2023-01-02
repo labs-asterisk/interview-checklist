@@ -22,3 +22,10 @@ export enum Difficulty {
   Hard = "Hard",
   Medium = "Medium",
 }
+
+export enum AttemptingState {
+  Untouched = "Untouched", // white
+  Attempting = "Attempting", // yellow
+  Unimplemented = "Unimplemented", // blue
+  Solved = "Solved", // green
+}

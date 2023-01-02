@@ -1,22 +1,28 @@
 import React, { useState } from "react";
 import Link from "next/link";
 
-import { Difficulty, type Problem } from "../types/problem-data";
+import {
+  type Difficulty,
+  type Problem,
+  // type AttemptingState,
+  AttemptingState,
+} from "../types/problem-data";
 
 import {
   Box,
   Text,
   Flex,
+  Button,
   Popover,
   PopoverTrigger,
   PopoverContent,
   PopoverArrow,
-  PopoverCloseButton,
   PopoverHeader,
-  PopoverBody,
 } from "@chakra-ui/react";
 
-import { ExternalLinkIcon } from "@chakra-ui/icons";
+import { ExternalLinkIcon, ArrowForwardIcon } from "@chakra-ui/icons";
+
+const attemptingStates = Object.values(AttemptingState);
 
 interface TagsBoxProps {
   difficulty: Difficulty;
@@ -97,12 +103,50 @@ const TagsBox: React.FC<TagsBoxProps> = ({
 
 interface ProblemBoxProps {
   problem: Problem;
+  initAttemptingState: AttemptingState;
 }
 
 const ProblemBox: React.FC<ProblemBoxProps> = ({
   problem: { name, link, occurence, tags, otherCompanies, difficulty },
+  initAttemptingState = AttemptingState.Untouched,
 }) => {
   const [isHovering, setIsHovering] = useState(false);
+
+  // Handling attemptingStates
+  const [attemptingState, setAttemptingState] =
+    useState<AttemptingState>(initAttemptingState);
+
+  const currentAsIdx = attemptingStates.indexOf(attemptingState);
+  const nextAsIdx = (currentAsIdx + 1) % attemptingStates.length;
+
+  const bgColor =
+    attemptingState === "Untouched"
+      ? "white"
+      : attemptingState === "Attempting"
+      ? "#ffeeba"
+      : attemptingState === "Unimplemented"
+      ? "#b8daff"
+      : "#c3e6cb";
+
+  const buttonColorScheme =
+    attemptingState === "Untouched"
+      ? "yellow"
+      : attemptingState === "Attempting"
+      ? "blue"
+      : attemptingState === "Unimplemented"
+      ? "green"
+      : "gray";
+  // const buttonColorScheme = attemptingState === "Untouched" ? "green" : (attemptingState === "Unimplemented" ? "");
+  // const buttonColorScheme = "green";
+
+  const buttonText =
+    attemptingState === "Untouched"
+      ? "Start Solving"
+      : attemptingState === "Attempting"
+      ? "Implement Solution"
+      : attemptingState === "Unimplemented"
+      ? "Finish Implementation"
+      : "Reset";
 
   return (
     <>
@@ -111,7 +155,8 @@ const ProblemBox: React.FC<ProblemBoxProps> = ({
         trigger="hover"
         openDelay={10}
         closeDelay={10}
-        onOpen={() => console.log("hello")}
+        // onOpen={() => setIsHovering(true)}
+        // onClose={() => setIsHovering(false)}
       >
         <PopoverTrigger>
           <Flex
@@ -125,6 +170,8 @@ const ProblemBox: React.FC<ProblemBoxProps> = ({
             alignItems="center"
             justifyContent="center"
             zIndex={1}
+            p={2}
+            bgColor={bgColor}
           >
             <Link href={link} target="_blank">
               <Text fontSize="12px" textAlign="center">
@@ -142,6 +189,20 @@ const ProblemBox: React.FC<ProblemBoxProps> = ({
         >
           <PopoverArrow bg="#282828" />
           <PopoverHeader borderBottomWidth={0}>
+            <Button
+              rightIcon={<ArrowForwardIcon />}
+              colorScheme={buttonColorScheme}
+              variant={attemptingState === "Solved" ? "outline" : "solid"}
+              width="100%"
+              mb={3}
+              onClick={() =>
+                setAttemptingState(
+                  attemptingStates[nextAsIdx] as AttemptingState
+                )
+              }
+            >
+              {buttonText}
+            </Button>
             <TagsBox
               difficulty={difficulty}
               typeTags={tags}
