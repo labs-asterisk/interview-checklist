@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { render } from "react-dom";
+import Link from "next/link";
 
 import { Difficulty, type Problem } from "../types/problem-data";
 
@@ -16,30 +16,36 @@ import {
   PopoverBody,
 } from "@chakra-ui/react";
 
+import { ExternalLinkIcon } from "@chakra-ui/icons";
+
 interface TagsBoxProps {
   difficulty: Difficulty;
   typeTags: string[];
+  otherCompaniesTags: (string | number)[][];
 }
 
-const TagsBox: React.FC<TagsBoxProps> = ({ difficulty, typeTags }) => {
+const TagsBox: React.FC<TagsBoxProps> = ({
+  difficulty,
+  typeTags,
+  otherCompaniesTags,
+}) => {
   const bgColor =
     difficulty === "Easy"
       ? "#2A3C3B"
       : difficulty === "Medium"
-        ? "#493F2A"
-        : "#482C30";
+      ? "#493F2A"
+      : "#482C30";
 
   const textColor =
     difficulty === "Easy"
       ? "#00B9A3"
       : difficulty === "Medium"
-        ? "#FEC11C"
-        : "#FE365F";
+      ? "#FEC11C"
+      : "#FE365F";
 
   return (
     <Flex width="100%" flexWrap="wrap" alignItems="center" gap={2}>
       <Box
-        // flex={1}
         px={3}
         py={1}
         borderRadius="20px"
@@ -55,17 +61,33 @@ const TagsBox: React.FC<TagsBoxProps> = ({ difficulty, typeTags }) => {
           {difficulty}
         </Text>
       </Box>
+
       {typeTags.map((typeTag) => (
         <Box
-          // flex={1}
           px={3}
           py={1}
           bgColor="#3F3E3F"
           borderRadius="20px"
           textColor="#C3C4C8"
+          key={typeTag}
         >
           <Text fontSize="14px" whiteSpace="nowrap" align="center">
             {typeTag}
+          </Text>
+        </Box>
+      ))}
+
+      {otherCompaniesTags.map(([cmpName, cmpOcc]) => (
+        <Box
+          px={3}
+          py={1}
+          bgColor="#3F3E3F"
+          borderRadius="20px"
+          textColor="#C3C4C8"
+          key={cmpName}
+        >
+          <Text fontSize="14px" whiteSpace="nowrap" align="center">
+            {`${cmpName} (x${cmpOcc})`}
           </Text>
         </Box>
       ))}
@@ -84,7 +106,13 @@ const ProblemBox: React.FC<ProblemBoxProps> = ({
 
   return (
     <>
-      <Popover isLazy trigger="hover">
+      <Popover
+        isLazy
+        trigger="hover"
+        openDelay={10}
+        closeDelay={10}
+        onOpen={() => console.log("hello")}
+      >
         <PopoverTrigger>
           <Flex
             onMouseOver={() => setIsHovering(true)}
@@ -98,10 +126,12 @@ const ProblemBox: React.FC<ProblemBoxProps> = ({
             justifyContent="center"
             zIndex={1}
           >
-            <Text fontSize="12px" textAlign="center">
-              {name}
-            </Text>
-            {/* {isHovering && <HoverPanel />} */}
+            <Link href={link} target="_blank">
+              <Text fontSize="12px" textAlign="center">
+                {name}{" "}
+                <ExternalLinkIcon display={isHovering ? "inline" : "none"} />
+              </Text>
+            </Link>
           </Flex>
         </PopoverTrigger>
         <PopoverContent
@@ -111,12 +141,13 @@ const ProblemBox: React.FC<ProblemBoxProps> = ({
           borderColor="#282828"
         >
           <PopoverArrow bg="#282828" />
-          {/* <PopoverCloseButton /> */}
           <PopoverHeader borderBottomWidth={0}>
-            <TagsBox difficulty={difficulty} typeTags={tags} />
+            <TagsBox
+              difficulty={difficulty}
+              typeTags={tags}
+              otherCompaniesTags={otherCompanies}
+            />
           </PopoverHeader>
-          {/* <PopoverBody>
-          </PopoverBody> */}
         </PopoverContent>
       </Popover>
     </>

@@ -25,14 +25,11 @@ const Navbar: React.FC = () => {
       bg={"linear-gradient(to right, #222B3E, #0F1B32)"}
       textColor="white"
       p={3}
-      minH="100%">
-      <Flex
-        width="100%"
-        flex={1}
-        flexDir="column"
-      >
+      minH="100%"
+    >
+      <Flex width="100%" flex={1} flexDir="column">
         {navItems.map(({ title, href, icon }) => (
-          <Link href={href}>
+          <Link href={href} key={title}>
             <Flex
               mb={3}
               p={3}
@@ -62,17 +59,31 @@ const Navbar: React.FC = () => {
                 src={data.user?.image ?? ""}
               />
               <Flex flexDir="column" justifyContent="center" flex={1}>
-                <Text fontSize="lg" fontWeight="semibold">{data.user?.name}</Text>
-                <Text fontSize="sm" color="gray.300">{data.user?.email}</Text>
+                <Text fontSize="lg" fontWeight="semibold">
+                  {data.user?.name}
+                </Text>
+                <Text fontSize="sm" color="gray.300">
+                  {data.user?.email}
+                </Text>
               </Flex>
             </Flex>
 
-            <Button colorScheme="blue" size="lg" width="100%" onClick={() => signOut()}>
+            <Button
+              colorScheme="blue"
+              size="lg"
+              width="100%"
+              onClick={() => signOut()}
+            >
               Sign out
             </Button>
           </>
         ) : (
-          <Button colorScheme="blue" size="lg" width="100%" onClick={() => signIn()}>
+          <Button
+            colorScheme="blue"
+            size="lg"
+            width="100%"
+            onClick={() => signIn()}
+          >
             Sign in
           </Button>
         )}
