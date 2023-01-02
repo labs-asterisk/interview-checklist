@@ -51,6 +51,7 @@ const Navbar: React.FC = () => {
       </Flex>
 
       <Box width="100%">
+        {/* TODO: handle loading state */}
         {status === "authenticated" ? (
           <>
             <Flex mb={4} columnGap={4}>
