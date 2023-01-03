@@ -193,6 +193,9 @@ const ProblemBox: React.FC<ProblemBoxProps> = ({
               rightIcon={<ArrowForwardIcon />}
               colorScheme={buttonColorScheme}
               variant={attemptingState === "Solved" ? "outline" : "solid"}
+              _hover={{
+                textColor: attemptingState === "Solved" ? "white" : "",
+              }}
               width="100%"
               mb={3}
               onClick={() =>
