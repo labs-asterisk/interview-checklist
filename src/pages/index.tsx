@@ -1,5 +1,6 @@
-import { Box, Grid, Text, GridItem } from "@chakra-ui/react";
+import { Box, Grid, Text, GridItem, Flex, Spinner } from "@chakra-ui/react";
 import { type NextPage } from "next";
+import GridLoader from "react-spinners/GridLoader";
 
 import Layout from "../components/layout";
 import ProblemBox from "../components/problemBox";
@@ -9,9 +10,6 @@ import problems from "../data/real/final_data.json";
 import { Problem, AttemptingState } from "../types/problem-data";
 
 import { trpc } from "../utils/trpc";
-import _ from "lodash";
-
-import { type UserProblem } from "@prisma/client";
 
 const ProblemsPage: NextPage = () => {
   const {
@@ -20,7 +18,15 @@ const ProblemsPage: NextPage = () => {
     isError,
   } = trpc.attempt.getProblemAttemptingStates.useQuery();
 
-  if (isLoading) return <div>Loading</div>;
+  if (isLoading)
+    return (
+      <Layout title="Problems">
+        <Flex minH="100vh" alignItems="center" justifyContent="center">
+          <GridLoader color="#172237" size={20} />
+        </Flex>
+      </Layout>
+    );
+
   if (isError) return <div>Error in loading data</div>;
 
   return (

@@ -12,7 +12,6 @@ specifiers:
   '@trpc/next': ^10.0.0
   '@trpc/react-query': ^10.0.0
   '@trpc/server': ^10.0.0
-  '@types/lodash': ^4.14.191
   '@types/node': ^18.0.0
   '@types/prettier': ^2.7.2
   '@types/react': ^18.0.14
@@ -23,7 +22,6 @@ specifiers:
   eslint: ^8.26.0
   eslint-config-next: 13.1.1
   framer-motion: ^8.0.2
-  lodash: ^4.17.21
   next: 13.1.1
   next-auth: ^4.18.3
   postcss: ^8.4.14
@@ -34,6 +32,7 @@ specifiers:
   react-dom: 18.2.0
   react-hover: ^3.0.1
   react-icons: ^4.7.1
+  react-spinners: ^0.13.7
   superjson: 1.9.1
   tailwindcss: ^3.2.0
   typescript: ^4.8.4
@@ -51,15 +50,14 @@ dependencies:
   '@trpc/next': 10.7.0_gmaturtqmtlrknaw65ek5pmv2i
   '@trpc/react-query': 10.7.0_x4ie6nhblo2vtx2aafrgzlfqy4
   '@trpc/server': 10.7.0
-  '@types/lodash': 4.14.191
   framer-motion: 8.0.2_biqbaboplfbrettd7655fr4n2y
-  lodash: 4.17.21
   next: 13.1.1_7xlrwlvvs7cv2obrs6a5y6oxxq
   next-auth: 4.18.7_q76c2b4vyoegvsbrcwkfvimnai
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
   react-hover: 3.0.1
   react-icons: 4.7.1_react@18.2.0
+  react-spinners: 0.13.7_biqbaboplfbrettd7655fr4n2y
   superjson: 1.9.1
   zod: 3.20.2
 
@@ -3527,10 +3525,6 @@ packages:
     resolution: {integrity: sha512-GK3g5RPZWTRSeLSpgP8Xhra+pnjBC56q9FZYe1d5RN3TJ35dbkGy3YqBSMbyCrlbi+CM9Z3Jk5yTL7RCsqboyQ==}
     dev: false
 
-  /lodash/4.17.21:
-    resolution: {integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==}
-    dev: false
-
   /loose-envify/1.4.0:
     resolution: {integrity: sha512-lyuxPGr/Wfhrlem2CL/UcnUc1zcqKAImBDzukY7Y5F/yQiNdko6+fRLevlw1HgMySw7f611UIY408EtxRSoK3Q==}
     hasBin: true
@@ -4093,6 +4087,16 @@ packages:
       tslib: 2.4.1
       use-callback-ref: 1.3.0_kzbn2opkn2327fwg5yzwzya5o4
       use-sidecar: 1.1.2_kzbn2opkn2327fwg5yzwzya5o4
+    dev: false
+
+  /react-spinners/0.13.7_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-mRamn56bfxWbGcacif5RT3UbeJaXi2AttjtPwSmomuv2IcxjpbfETCzdTvaQpNDk0E33ENJsStsQeKAZFuJcpA==}
+    peerDependencies:
+      react: ^16.0.0 || ^17.0.0 || ^18.0.0
+      react-dom: ^16.0.0 || ^17.0.0 || ^18.0.0
+    dependencies:
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
     dev: false
 
   /react-ssr-prepass/1.5.0_react@18.2.0:
