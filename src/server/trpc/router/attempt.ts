@@ -2,23 +2,76 @@ import { z } from "zod";
 
 import { router, publicProcedure, protectedProcedure } from "../trpc";
 
+import { AttemptingState } from "../../../types/problem-data";
+
 export const attemptRouter = router({
+  getProblemAttemptingStates: protectedProcedure.query(async ({ ctx }) => {
+    const userDirtyProblems = await ctx.prisma.userProblem.findMany({
+      where: { userId: ctx.session.user.id },
+    });
+
+    console.log({
+      user: ctx.session.user,
+      dirtyProblemCount: userDirtyProblems.length,
+    });
+
+    return userDirtyProblems;
+  }),
   attemptProblem: protectedProcedure
-    .input(z.object({ slug: z.string(), newAttemptingState: z.string() }))
-    .mutation(({ ctx, input }) => {
+    .input(
+      z.object({
+        slug: z.string(),
+        newAttemptingState: z.enum([
+          "Untouched",
+          "Attempting",
+          "Unimplemented",
+          "Solved",
+        ]),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
       console.log({ input, user: ctx.session.user });
-      // console.log({ ctxUser: ctx.session.user });
-      // console.log({ user: ctx.?session.?user });
 
-      return {
-        test: "hello",
-      };
+      const { slug: problemSlug, newAttemptingState } = input;
+      const { id: userId } = ctx.session.user;
 
-      // return {
-      //   greeting: `Hello ${input?.text ?? "world"}`,
-      // };
+      try {
+        const userProblems = await ctx.prisma.userProblem.findMany({
+          where: { userId, problemSlug },
+        });
+
+        console.log("init", { userProblems });
+
+        if (userProblems.length !== 0) {
+          console.log(
+            "updated AS: ",
+            await ctx.prisma.userProblem.update({
+              where: { id: userProblems[0]?.id },
+              data: { attemptingState: newAttemptingState as AttemptingState },
+            })
+          );
+        } else {
+          console.log(
+            "created AS: ",
+            await ctx.prisma.userProblem.create({
+              data: {
+                userId,
+                problemSlug,
+                attemptingState: newAttemptingState,
+              },
+            })
+          );
+        }
+
+        return {
+          status: "success",
+        };
+      } catch (e) {
+        console.error(e);
+
+        return {
+          status: "error",
+        };
+      }
     }),
-  // getAll: publicProcedure.query(({ ctx }) => {
-  //   return ctx.prisma.example.findMany();
-  // }),
 });

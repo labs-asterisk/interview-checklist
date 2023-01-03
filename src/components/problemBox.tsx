@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import _ from "lodash";
 
 import {
   type Difficulty,
@@ -23,7 +24,6 @@ import {
 import { ExternalLinkIcon, ArrowForwardIcon } from "@chakra-ui/icons";
 
 import { trpc } from "../utils/trpc";
-import { useDidMountEffect } from "../utils/custom-hooks";
 
 const attemptingStates = Object.values(AttemptingState);
 
@@ -117,19 +117,15 @@ const ProblemBox: React.FC<ProblemBoxProps> = ({
 
   const [isHovering, setIsHovering] = useState(false);
 
-  // Handling attemptingStates
   const [attemptingState, setAttemptingState] =
     useState<AttemptingState>(initAttemptingState);
-
-  // TODO: check if slug is dirty for user in db and if yes, replace this
-  // let prevAsIdx = -1;
 
   const currentAsIdx = attemptingStates.indexOf(attemptingState);
   const nextAsIdx = (currentAsIdx + 1) % attemptingStates.length;
 
   const handleButtonClick = () => {
-    // prevAsIdx = currentAsIdx;
     setAttemptingState(attemptingStates[nextAsIdx] as AttemptingState);
+
     mut.mutate({
       slug,
       newAttemptingState: attemptingStates[nextAsIdx] as AttemptingState,
@@ -141,16 +137,6 @@ const ProblemBox: React.FC<ProblemBoxProps> = ({
       } to ${attemptingState}`
     );
   };
-
-  // useEffect(() => {
-  //   if (prevAsIdx !== -1) {
-  //     console.log(
-  //       `${slug} changed from ${
-  //         attemptingStates[currentAsIdx - 1]
-  //       } to ${attemptingState}`
-  //     );
-  //   }
-  // }, [attemptingState]);
 
   const bgColor =
     attemptingState === "Untouched"
@@ -181,14 +167,7 @@ const ProblemBox: React.FC<ProblemBoxProps> = ({
 
   return (
     <>
-      <Popover
-        isLazy
-        trigger="hover"
-        openDelay={10}
-        closeDelay={10}
-        // onOpen={() => setIsHovering(true)}
-        // onClose={() => setIsHovering(false)}
-      >
+      <Popover isLazy trigger="hover" openDelay={10} closeDelay={10}>
         <PopoverTrigger>
           <Flex
             onMouseOver={() => setIsHovering(true)}

@@ -12,6 +12,7 @@ specifiers:
   '@trpc/next': ^10.0.0
   '@trpc/react-query': ^10.0.0
   '@trpc/server': ^10.0.0
+  '@types/lodash': ^4.14.191
   '@types/node': ^18.0.0
   '@types/prettier': ^2.7.2
   '@types/react': ^18.0.14
@@ -22,6 +23,7 @@ specifiers:
   eslint: ^8.26.0
   eslint-config-next: 13.1.1
   framer-motion: ^8.0.2
+  lodash: ^4.17.21
   next: 13.1.1
   next-auth: ^4.18.3
   postcss: ^8.4.14
@@ -49,7 +51,9 @@ dependencies:
   '@trpc/next': 10.7.0_gmaturtqmtlrknaw65ek5pmv2i
   '@trpc/react-query': 10.7.0_x4ie6nhblo2vtx2aafrgzlfqy4
   '@trpc/server': 10.7.0
+  '@types/lodash': 4.14.191
   framer-motion: 8.0.2_biqbaboplfbrettd7655fr4n2y
+  lodash: 4.17.21
   next: 13.1.1_7xlrwlvvs7cv2obrs6a5y6oxxq
   next-auth: 4.18.7_q76c2b4vyoegvsbrcwkfvimnai
   react: 18.2.0
@@ -3521,6 +3525,10 @@ packages:
 
   /lodash.mergewith/4.6.2:
     resolution: {integrity: sha512-GK3g5RPZWTRSeLSpgP8Xhra+pnjBC56q9FZYe1d5RN3TJ35dbkGy3YqBSMbyCrlbi+CM9Z3Jk5yTL7RCsqboyQ==}
+    dev: false
+
+  /lodash/4.17.21:
+    resolution: {integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==}
     dev: false
 
   /loose-envify/1.4.0:

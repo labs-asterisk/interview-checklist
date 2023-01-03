@@ -75,6 +75,8 @@ model UserProblem {
 
   problemSlug     String
   attemptingState AttemptingState
+
+  @@unique([id, problemSlug])
 }
 
 enum AttemptingState {
