@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 
 import {
@@ -21,6 +21,9 @@ import {
 } from "@chakra-ui/react";
 
 import { ExternalLinkIcon, ArrowForwardIcon } from "@chakra-ui/icons";
+
+import { trpc } from "../utils/trpc";
+import { useDidMountEffect } from "../utils/custom-hooks";
 
 const attemptingStates = Object.values(AttemptingState);
 
@@ -75,7 +78,7 @@ const TagsBox: React.FC<TagsBoxProps> = ({
           bgColor="#3F3E3F"
           borderRadius="20px"
           textColor="#C3C4C8"
-          key={typeTag}
+          key={typeTag + otherCompaniesTags.toString()}
         >
           <Text fontSize="14px" whiteSpace="nowrap" align="center">
             {typeTag}
@@ -83,14 +86,14 @@ const TagsBox: React.FC<TagsBoxProps> = ({
         </Box>
       ))}
 
-      {otherCompaniesTags.map(([cmpName, cmpOcc]) => (
+      {otherCompaniesTags.map(([cmpName, cmpOcc], i) => (
         <Box
           px={3}
           py={1}
           bgColor="#3F3E3F"
           borderRadius="20px"
           textColor="#C3C4C8"
-          key={cmpName}
+          key={cmpName + cmpOcc!.toString() + i.toString()}
         >
           <Text fontSize="14px" whiteSpace="nowrap" align="center">
             {`${cmpName} (x${cmpOcc})`}
@@ -107,17 +110,47 @@ interface ProblemBoxProps {
 }
 
 const ProblemBox: React.FC<ProblemBoxProps> = ({
-  problem: { name, link, occurence, tags, otherCompanies, difficulty },
+  problem: { name, slug, link, occurence, tags, otherCompanies, difficulty },
   initAttemptingState,
 }) => {
+  const mut = trpc.attempt.attemptProblem.useMutation();
+
   const [isHovering, setIsHovering] = useState(false);
 
   // Handling attemptingStates
   const [attemptingState, setAttemptingState] =
     useState<AttemptingState>(initAttemptingState);
 
+  // TODO: check if slug is dirty for user in db and if yes, replace this
+  // let prevAsIdx = -1;
+
   const currentAsIdx = attemptingStates.indexOf(attemptingState);
   const nextAsIdx = (currentAsIdx + 1) % attemptingStates.length;
+
+  const handleButtonClick = () => {
+    // prevAsIdx = currentAsIdx;
+    setAttemptingState(attemptingStates[nextAsIdx] as AttemptingState);
+    mut.mutate({
+      slug,
+      newAttemptingState: attemptingStates[nextAsIdx] as AttemptingState,
+    });
+
+    console.log(
+      `${slug} changed from ${
+        attemptingStates[currentAsIdx - 1]
+      } to ${attemptingState}`
+    );
+  };
+
+  // useEffect(() => {
+  //   if (prevAsIdx !== -1) {
+  //     console.log(
+  //       `${slug} changed from ${
+  //         attemptingStates[currentAsIdx - 1]
+  //       } to ${attemptingState}`
+  //     );
+  //   }
+  // }, [attemptingState]);
 
   const bgColor =
     attemptingState === "Untouched"
@@ -196,11 +229,7 @@ const ProblemBox: React.FC<ProblemBoxProps> = ({
               }}
               width="100%"
               mb={3}
-              onClick={() =>
-                setAttemptingState(
-                  attemptingStates[nextAsIdx] as AttemptingState
-                )
-              }
+              onClick={handleButtonClick}
             >
               {buttonText}
             </Button>
