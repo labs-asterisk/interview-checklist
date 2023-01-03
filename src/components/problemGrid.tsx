@@ -4,7 +4,7 @@ import { Flex, Grid, GridItem, Text, Box } from "@chakra-ui/react";
 import probs from "../data/real/final_data.json";
 
 import ProblemBox from "./problemBox";
-import { type Problem } from "../types/problem-data";
+import { type Problem, AttemptingState } from "../types/problem-data";
 
 const ProblemGrid: React.FC = () => {
   return (
@@ -15,7 +15,10 @@ const ProblemGrid: React.FC = () => {
           <Text fontSize="40px">{sectionName}</Text>
           <Flex width="100%" flexWrap="wrap" alignItems="center" gap={2}>
             {problems.map((problem) => (
-              <ProblemBox problem={problem as Problem} />
+              <ProblemBox
+                initAttemptingState={AttemptingState.Untouched}
+                problem={problem as Problem}
+              />
             ))}
           </Flex>
         </Box>

@@ -108,7 +108,7 @@ interface ProblemBoxProps {
 
 const ProblemBox: React.FC<ProblemBoxProps> = ({
   problem: { name, link, occurence, tags, otherCompanies, difficulty },
-  initAttemptingState = AttemptingState.Untouched,
+  initAttemptingState,
 }) => {
   const [isHovering, setIsHovering] = useState(false);
 
@@ -136,8 +136,6 @@ const ProblemBox: React.FC<ProblemBoxProps> = ({
       : attemptingState === "Unimplemented"
       ? "green"
       : "gray";
-  // const buttonColorScheme = attemptingState === "Untouched" ? "green" : (attemptingState === "Unimplemented" ? "");
-  // const buttonColorScheme = "green";
 
   const buttonText =
     attemptingState === "Untouched"
