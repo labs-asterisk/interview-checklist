@@ -1,4 +1,4 @@
-import { Box, Grid, Text, GridItem, Flex, Spinner } from "@chakra-ui/react";
+import { Box, Grid, Text, GridItem, Flex } from "@chakra-ui/react";
 import { type NextPage } from "next";
 import GridLoader from "react-spinners/GridLoader";
 
@@ -7,7 +7,7 @@ import ProblemBox from "../components/problemBox";
 
 import problems from "../data/real/final_data.json";
 
-import { Problem, AttemptingState } from "../types/problem-data";
+import { type Problem, AttemptingState } from "../types/problem-data";
 
 import { trpc } from "../utils/trpc";
 

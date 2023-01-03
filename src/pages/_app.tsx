@@ -6,8 +6,6 @@ import { ChakraProvider } from "@chakra-ui/react";
 
 import { trpc } from "../utils/trpc";
 
-import "react-loading-skeleton/dist/skeleton.css";
-
 import "../styles/globals.css";
 
 const MyApp: AppType<{ session: Session | null }> = ({

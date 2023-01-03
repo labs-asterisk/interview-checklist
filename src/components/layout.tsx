@@ -7,7 +7,7 @@ import { Grid, GridItem } from "@chakra-ui/react";
 import Navbar from "./navbar";
 
 interface LayoutProps {
-  title: String;
+  title: string;
   children: ReactNode;
 }
 

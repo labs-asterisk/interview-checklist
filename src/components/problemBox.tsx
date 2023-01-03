@@ -1,6 +1,5 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
-import _ from "lodash";
 
 import {
   type Difficulty,
@@ -93,7 +92,7 @@ const TagsBox: React.FC<TagsBoxProps> = ({
           bgColor="#3F3E3F"
           borderRadius="20px"
           textColor="#C3C4C8"
-          key={cmpName + cmpOcc!.toString() + i.toString()}
+          key={`${cmpName} ${cmpOcc} ${i}`}
         >
           <Text fontSize="14px" whiteSpace="nowrap" align="center">
             {`${cmpName} (x${cmpOcc})`}
@@ -110,7 +109,7 @@ interface ProblemBoxProps {
 }
 
 const ProblemBox: React.FC<ProblemBoxProps> = ({
-  problem: { name, slug, link, occurence, tags, otherCompanies, difficulty },
+  problem: { name, slug, link, tags, otherCompanies, difficulty },
   initAttemptingState,
 }) => {
   const mut = trpc.attempt.attemptProblem.useMutation();

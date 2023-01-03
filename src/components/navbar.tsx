@@ -2,7 +2,7 @@ import Link from "next/link";
 
 import { Flex, Icon, Text, Button, Box, Image } from "@chakra-ui/react";
 
-import { MdHome, MdQuestionAnswer, MdNoteAlt } from "react-icons/md";
+import { MdNoteAlt } from "react-icons/md";
 import { signIn, signOut, useSession } from "next-auth/react";
 
 const navItems = [
@@ -56,6 +56,7 @@ const Navbar: React.FC = () => {
                 height={12}
                 width={12}
                 rounded="full"
+                alt="DP"
                 src={data.user?.image ?? ""}
               />
               <Flex flexDir="column" justifyContent="center" flex={1}>

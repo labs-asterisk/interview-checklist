@@ -1,8 +1,8 @@
 import { z } from "zod";
 
-import { router, publicProcedure, protectedProcedure } from "../trpc";
+import { router, protectedProcedure } from "../trpc";
 
-import { AttemptingState } from "../../../types/problem-data";
+import { type AttemptingState } from "../../../types/problem-data";
 
 export const attemptRouter = router({
   getProblemAttemptingStates: protectedProcedure.query(async ({ ctx }) => {
