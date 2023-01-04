@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 import {
   type Difficulty,
@@ -113,7 +114,8 @@ const ProblemBox: React.FC<ProblemBoxProps> = ({
   problem: { name, slug, link, tags, otherCompanies, difficulty },
   initAttemptingState,
 }) => {
-  const { status } = useSession();
+  // const { status } = useSession();
+  const router = useRouter();
   const mut = trpc.attempt.attemptProblem.useMutation();
 
   const [isHovering, setIsHovering] = useState(false);
@@ -173,6 +175,7 @@ const ProblemBox: React.FC<ProblemBoxProps> = ({
           <Flex
             onMouseOver={() => setIsHovering(true)}
             onMouseOut={() => setIsHovering(false)}
+            onClick={handleButtonClick}
             position="relative"
             userSelect="none"
             cursor="pointer"
@@ -184,12 +187,18 @@ const ProblemBox: React.FC<ProblemBoxProps> = ({
             p={2}
             bgColor={bgColor}
           >
-            <Link href={link} target="_blank">
-              <Text fontSize="12px" textAlign="center">
-                {name}{" "}
-                <ExternalLinkIcon display={isHovering ? "inline" : "none"} />
-              </Text>
-            </Link>
+            <Text
+              fontSize="12px"
+              textAlign="center"
+              onClick={(e) => {
+                e.preventDefault();
+                window.open(link, "_blank");
+                e.stopPropagation();
+              }}
+              _hover={{ textDecoration: "underline" }}
+            >
+              {name}
+            </Text>
           </Flex>
         </PopoverTrigger>
         <PopoverContent
@@ -201,23 +210,6 @@ const ProblemBox: React.FC<ProblemBoxProps> = ({
         >
           <PopoverArrow bg="#282828" />
           <PopoverHeader borderBottomWidth={0}>
-            {status === "authenticated" ? (
-              <Button
-                rightIcon={<ArrowForwardIcon />}
-                colorScheme={buttonColorScheme}
-                variant={attemptingState === "Solved" ? "outline" : "solid"}
-                _hover={{
-                  textColor: attemptingState === "Solved" ? "white" : "",
-                }}
-                width="100%"
-                mb={3}
-                onClick={handleButtonClick}
-              >
-                {buttonText}
-              </Button>
-            ) : (
-              <></>
-            )}
             <TagsBox
               difficulty={difficulty}
               typeTags={tags}

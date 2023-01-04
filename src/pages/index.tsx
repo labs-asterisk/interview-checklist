@@ -5,7 +5,7 @@ import GridLoader from "react-spinners/GridLoader";
 import Layout from "../components/layout";
 import ProblemBox from "../components/problemBox";
 
-import problems from "../data/real/final_data.json";
+import problems from "../data/real/final_final_data.json";
 
 import { type Problem, AttemptingState } from "../types/problem-data";
 

@@ -18,7 +18,7 @@ import {
   PopoverHeader,
 } from "@chakra-ui/react";
 
-import { ExternalLinkIcon, ArrowForwardIcon } from "@chakra-ui/icons";
+import { ExternalLinkIcon } from "@chakra-ui/icons";
 
 interface TagsBoxProps {
   difficulty: Difficulty;
@@ -135,12 +135,19 @@ const ProblemViewBox: React.FC<ProblemViewBoxProps> = ({
             p={2}
             bgColor={bgColor}
           >
-            <Link href={link} target="_blank">
-              <Text fontSize="12px" textAlign="center">
-                {name}{" "}
-                <ExternalLinkIcon display={isHovering ? "inline" : "none"} />
-              </Text>
-            </Link>
+            <Text
+              fontSize="12px"
+              textAlign="center"
+              onClick={(e) => {
+                e.preventDefault();
+                window.open(link, "_blank");
+                e.stopPropagation();
+              }}
+              _hover={{ textDecoration: "underline" }}
+            >
+              {name}
+              {/* <ExternalLinkIcon display={isHovering ? "inline" : "none"} /> */}
+            </Text>
           </Flex>
         </PopoverTrigger>
         <PopoverContent
