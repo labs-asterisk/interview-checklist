@@ -44,10 +44,18 @@ const ViewPage: NextPage = () => {
 
   return (
     <Layout title="Problems">
-      <Box p={8}>
+      <Text
+        ml={16}
+        mt={8}
+        fontSize="4xl"
+        fontWeight="bold"
+        color="gray.700"
+      >{`${data?.user.name}'s Checklist`}</Text>
+      <Box p={8} pt={0}>
         {problems.sections.map(({ sectionName, problems }, i) => (
           <Box
             p={8}
+            pt={2}
             borderBottomColor="gray.100"
             borderBottomStyle="solid"
             borderBottomWidth={2}

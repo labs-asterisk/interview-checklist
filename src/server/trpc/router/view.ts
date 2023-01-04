@@ -1,9 +1,19 @@
 import { z } from "zod";
 
-import { router, publicProcedure } from "../trpc";
+import { router, publicProcedure, protectedProcedure } from "../trpc";
 import { TRPCError } from "@trpc/server";
 
 export const viewRouter = router({
+  getSharingLink: protectedProcedure.query(async ({ ctx }) => {
+    const { id: userId } = ctx.session.user;
+
+    const { NEXTAUTH_URL: nextAuthUrl } = process.env;
+    const url = nextAuthUrl?.endsWith("/")
+      ? nextAuthUrl.slice(0, -1)
+      : nextAuthUrl;
+
+    return `${url}/view/${userId}`;
+  }),
   getGrid: publicProcedure
     .input(z.object({ userId: z.string() }))
     .query(async ({ ctx, input }) => {

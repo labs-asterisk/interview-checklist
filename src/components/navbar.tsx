@@ -15,6 +15,8 @@ import { CopyIcon, CheckIcon } from "@chakra-ui/icons";
 import { MdNoteAlt } from "react-icons/md";
 import { signIn, signOut, useSession } from "next-auth/react";
 
+import { trpc } from "../utils/trpc";
+
 const navItems = [
   {
     title: "Problems",
@@ -27,7 +29,9 @@ const Navbar: React.FC = () => {
   const { data, status } = useSession();
   const { onCopy, value, setValue, hasCopied } = useClipboard("");
 
-  const sharingLink = "https://google.com";
+  // const sharingLink = "https://google.com";
+
+  const { data: sharingLink } = trpc.view.getSharingLink.useQuery();
 
   return (
     <Flex
@@ -60,34 +64,34 @@ const Navbar: React.FC = () => {
         ))}
       </Flex>
 
-      <Box width="100%" mb={4}>
-        <Flex>
-          <Input
-            value={sharingLink}
-            readOnly
-            borderColor="#525252"
-            borderTopRightRadius={0}
-            borderBottomRightRadius={0}
-          />
-          <Button
-            variant="outline"
-            borderColor="#525252"
-            borderTopLeftRadius={0}
-            borderBottomLeftRadius={0}
-            onClick={() => {
-              setValue(sharingLink);
-              onCopy();
-            }}
-          >
-            {hasCopied ? <CheckIcon color="#0f7d14" /> : <CopyIcon />}
-          </Button>
-        </Flex>
-      </Box>
-
       <Box width="100%">
         {/* TODO: handle loading state */}
         {status === "authenticated" ? (
           <>
+            <Box width="100%" mb={4}>
+              <Flex>
+                <Input
+                  value={sharingLink}
+                  readOnly
+                  borderColor="#525252"
+                  borderTopRightRadius={0}
+                  borderBottomRightRadius={0}
+                />
+                <Button
+                  variant="outline"
+                  borderColor="#525252"
+                  borderTopLeftRadius={0}
+                  borderBottomLeftRadius={0}
+                  onClick={() => {
+                    setValue(sharingLink ? sharingLink : "");
+                    onCopy();
+                  }}
+                >
+                  {hasCopied ? <CheckIcon color="#0f7d14" /> : <CopyIcon />}
+                </Button>
+              </Flex>
+            </Box>
+
             <Flex mb={4} columnGap={4}>
               <Image
                 height={12}
