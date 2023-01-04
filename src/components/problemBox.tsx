@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import Link from "next/link";
-import { useRouter } from "next/router";
 
 import {
   type Difficulty,
@@ -13,7 +11,6 @@ import {
   Box,
   Text,
   Flex,
-  Button,
   Popover,
   PopoverTrigger,
   PopoverContent,
@@ -21,104 +18,29 @@ import {
   PopoverHeader,
 } from "@chakra-ui/react";
 
-import { ExternalLinkIcon, ArrowForwardIcon } from "@chakra-ui/icons";
-
 import { trpc } from "../utils/trpc";
-import { useSession } from "next-auth/react";
+
+import TagsBox from "./tagsBox";
 
 const attemptingStates = Object.values(AttemptingState);
 
-interface TagsBoxProps {
-  difficulty: Difficulty;
-  typeTags: string[];
-  otherCompaniesTags: (string | number)[][];
-}
-
-const TagsBox: React.FC<TagsBoxProps> = ({
-  difficulty,
-  typeTags,
-  otherCompaniesTags,
-}) => {
-  const bgColor =
-    difficulty === "Easy"
-      ? "#2A3C3B"
-      : difficulty === "Medium"
-      ? "#493F2A"
-      : "#482C30";
-
-  const textColor =
-    difficulty === "Easy"
-      ? "#00B9A3"
-      : difficulty === "Medium"
-      ? "#FEC11C"
-      : "#FE365F";
-
-  return (
-    <Flex width="100%" flexWrap="wrap" alignItems="center" gap={2}>
-      <Box
-        px={3}
-        py={1}
-        borderRadius="20px"
-        bgColor={bgColor}
-        textColor={textColor}
-      >
-        <Text
-          fontSize="14px"
-          whiteSpace="nowrap"
-          align="center"
-          fontWeight="bold"
-        >
-          {difficulty}
-        </Text>
-      </Box>
-
-      {typeTags.map((typeTag) => (
-        <Box
-          px={3}
-          py={1}
-          bgColor="#3F3E3F"
-          borderRadius="20px"
-          textColor="#C3C4C8"
-          key={typeTag + otherCompaniesTags.toString()}
-        >
-          <Text fontSize="14px" whiteSpace="nowrap" align="center">
-            {typeTag}
-          </Text>
-        </Box>
-      ))}
-
-      {otherCompaniesTags.map(([cmpName, cmpOcc], i) => (
-        <Box
-          px={3}
-          py={1}
-          bgColor="#3F3E3F"
-          borderRadius="20px"
-          textColor="#C3C4C8"
-          key={`${cmpName} ${cmpOcc} ${i}`}
-        >
-          <Text fontSize="14px" whiteSpace="nowrap" align="center">
-            {`${cmpName} (x${cmpOcc})`}
-          </Text>
-        </Box>
-      ))}
-    </Flex>
-  );
-};
-
 interface ProblemBoxProps {
   problem: Problem;
+  companyName: string;
   initAttemptingState: AttemptingState;
 }
 
 const ProblemBox: React.FC<ProblemBoxProps> = ({
-  problem: { name, slug, link, tags, otherCompanies, difficulty },
+  problem: { name, occurence, slug, link, tags, otherCompanies, difficulty },
+  companyName,
   initAttemptingState,
 }) => {
-  // const { status } = useSession();
-  const router = useRouter();
-  const mut = trpc.attempt.attemptProblem.useMutation();
-
-  const [isHovering, setIsHovering] = useState(false);
+  const trpcCtx = trpc.useContext();
+  const mut = trpc.attempt.attemptProblem.useMutation({
+    onSuccess: () => {
+      trpcCtx.view.getSolvedSlugs.invalidate();
+    },
+  });
 
   const [attemptingState, setAttemptingState] =
     useState<AttemptingState>(initAttemptingState);
@@ -127,6 +49,8 @@ const ProblemBox: React.FC<ProblemBoxProps> = ({
   const nextAsIdx = (currentAsIdx + 1) % attemptingStates.length;
 
   const handleButtonClick = () => {
+    if (mut.isLoading) return;
+
     setAttemptingState(attemptingStates[nextAsIdx] as AttemptingState);
 
     mut.mutate({
@@ -150,31 +74,11 @@ const ProblemBox: React.FC<ProblemBoxProps> = ({
       ? "#b8daff"
       : "#c3e6cb";
 
-  const buttonColorScheme =
-    attemptingState === "Untouched"
-      ? "yellow"
-      : attemptingState === "Attempting"
-      ? "blue"
-      : attemptingState === "Unimplemented"
-      ? "green"
-      : "gray";
-
-  const buttonText =
-    attemptingState === "Untouched"
-      ? "Start Solving"
-      : attemptingState === "Attempting"
-      ? "Implement Solution"
-      : attemptingState === "Unimplemented"
-      ? "Finish Implementation"
-      : "Reset";
-
   return (
     <>
       <Popover isLazy trigger="hover" openDelay={10} closeDelay={10}>
         <PopoverTrigger>
           <Flex
-            onMouseOver={() => setIsHovering(true)}
-            onMouseOut={() => setIsHovering(false)}
             onClick={handleButtonClick}
             position="relative"
             userSelect="none"
@@ -213,7 +117,7 @@ const ProblemBox: React.FC<ProblemBoxProps> = ({
             <TagsBox
               difficulty={difficulty}
               typeTags={tags}
-              otherCompaniesTags={otherCompanies}
+              companiesTags={[[companyName, occurence], ...otherCompanies]}
             />
           </PopoverHeader>
         </PopoverContent>

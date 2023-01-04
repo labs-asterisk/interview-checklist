@@ -18,96 +18,19 @@ import {
   PopoverHeader,
 } from "@chakra-ui/react";
 
-import { ExternalLinkIcon } from "@chakra-ui/icons";
-
-interface TagsBoxProps {
-  difficulty: Difficulty;
-  typeTags: string[];
-  otherCompaniesTags: (string | number)[][];
-}
-
-const TagsBox: React.FC<TagsBoxProps> = ({
-  difficulty,
-  typeTags,
-  otherCompaniesTags,
-}) => {
-  const bgColor =
-    difficulty === "Easy"
-      ? "#2A3C3B"
-      : difficulty === "Medium"
-      ? "#493F2A"
-      : "#482C30";
-
-  const textColor =
-    difficulty === "Easy"
-      ? "#00B9A3"
-      : difficulty === "Medium"
-      ? "#FEC11C"
-      : "#FE365F";
-
-  return (
-    <Flex width="100%" flexWrap="wrap" alignItems="center" gap={2}>
-      <Box
-        px={3}
-        py={1}
-        borderRadius="20px"
-        bgColor={bgColor}
-        textColor={textColor}
-      >
-        <Text
-          fontSize="14px"
-          whiteSpace="nowrap"
-          align="center"
-          fontWeight="bold"
-        >
-          {difficulty}
-        </Text>
-      </Box>
-
-      {typeTags.map((typeTag) => (
-        <Box
-          px={3}
-          py={1}
-          bgColor="#3F3E3F"
-          borderRadius="20px"
-          textColor="#C3C4C8"
-          key={typeTag + otherCompaniesTags.toString()}
-        >
-          <Text fontSize="14px" whiteSpace="nowrap" align="center">
-            {typeTag}
-          </Text>
-        </Box>
-      ))}
-
-      {otherCompaniesTags.map(([cmpName, cmpOcc], i) => (
-        <Box
-          px={3}
-          py={1}
-          bgColor="#3F3E3F"
-          borderRadius="20px"
-          textColor="#C3C4C8"
-          key={`${cmpName} ${cmpOcc} ${i}`}
-        >
-          <Text fontSize="14px" whiteSpace="nowrap" align="center">
-            {`${cmpName} (x${cmpOcc})`}
-          </Text>
-        </Box>
-      ))}
-    </Flex>
-  );
-};
+import TagsBox from "./tagsBox";
 
 interface ProblemViewBoxProps {
   problem: Problem;
   initAttemptingState: AttemptingState;
+  companyName: string;
 }
 
 const ProblemViewBox: React.FC<ProblemViewBoxProps> = ({
-  problem: { name, slug, link, tags, otherCompanies, difficulty },
+  problem: { name, slug, occurence, link, tags, otherCompanies, difficulty },
   initAttemptingState: attemptingState,
+  companyName,
 }) => {
-  const [isHovering, setIsHovering] = useState(false);
-
   const bgColor =
     attemptingState === "Untouched"
       ? "white"
@@ -122,8 +45,6 @@ const ProblemViewBox: React.FC<ProblemViewBoxProps> = ({
       <Popover isLazy trigger="hover" openDelay={10} closeDelay={10}>
         <PopoverTrigger>
           <Flex
-            onMouseOver={() => setIsHovering(true)}
-            onMouseOut={() => setIsHovering(false)}
             position="relative"
             userSelect="none"
             cursor="pointer"
@@ -146,7 +67,6 @@ const ProblemViewBox: React.FC<ProblemViewBoxProps> = ({
               _hover={{ textDecoration: "underline" }}
             >
               {name}
-              {/* <ExternalLinkIcon display={isHovering ? "inline" : "none"} /> */}
             </Text>
           </Flex>
         </PopoverTrigger>
@@ -162,7 +82,7 @@ const ProblemViewBox: React.FC<ProblemViewBoxProps> = ({
             <TagsBox
               difficulty={difficulty}
               typeTags={tags}
-              otherCompaniesTags={otherCompanies}
+              companiesTags={[[companyName, occurence], ...otherCompanies]}
             />
           </PopoverHeader>
         </PopoverContent>
