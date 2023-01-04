@@ -1,6 +1,16 @@
 import Link from "next/link";
 
-import { Flex, Icon, Text, Button, Box, Image } from "@chakra-ui/react";
+import {
+  Flex,
+  Icon,
+  Text,
+  Button,
+  Box,
+  Image,
+  Input,
+  useClipboard,
+} from "@chakra-ui/react";
+import { CopyIcon, CheckIcon } from "@chakra-ui/icons";
 
 import { MdNoteAlt } from "react-icons/md";
 import { signIn, signOut, useSession } from "next-auth/react";
@@ -15,6 +25,9 @@ const navItems = [
 
 const Navbar: React.FC = () => {
   const { data, status } = useSession();
+  const { onCopy, value, setValue, hasCopied } = useClipboard("");
+
+  const sharingLink = "https://google.com";
 
   return (
     <Flex
@@ -46,6 +59,30 @@ const Navbar: React.FC = () => {
           </Link>
         ))}
       </Flex>
+
+      <Box width="100%" mb={4}>
+        <Flex>
+          <Input
+            value={sharingLink}
+            readOnly
+            borderColor="#525252"
+            borderTopRightRadius={0}
+            borderBottomRightRadius={0}
+          />
+          <Button
+            variant="outline"
+            borderColor="#525252"
+            borderTopLeftRadius={0}
+            borderBottomLeftRadius={0}
+            onClick={() => {
+              setValue(sharingLink);
+              onCopy();
+            }}
+          >
+            {hasCopied ? <CheckIcon color="#0f7d14" /> : <CopyIcon />}
+          </Button>
+        </Flex>
+      </Box>
 
       <Box width="100%">
         {/* TODO: handle loading state */}

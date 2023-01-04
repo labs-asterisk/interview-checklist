@@ -195,6 +195,7 @@ const ProblemBox: React.FC<ProblemBoxProps> = ({
           bg="#282828"
           textColor="white"
           borderColor="#282828"
+          userSelect="none"
         >
           <PopoverArrow bg="#282828" />
           <PopoverHeader borderBottomWidth={0}>
