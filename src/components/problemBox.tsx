@@ -23,6 +23,7 @@ import {
 import { ExternalLinkIcon, ArrowForwardIcon } from "@chakra-ui/icons";
 
 import { trpc } from "../utils/trpc";
+import { useSession } from "next-auth/react";
 
 const attemptingStates = Object.values(AttemptingState);
 
@@ -112,6 +113,7 @@ const ProblemBox: React.FC<ProblemBoxProps> = ({
   problem: { name, slug, link, tags, otherCompanies, difficulty },
   initAttemptingState,
 }) => {
+  const { status } = useSession();
   const mut = trpc.attempt.attemptProblem.useMutation();
 
   const [isHovering, setIsHovering] = useState(false);
@@ -199,19 +201,23 @@ const ProblemBox: React.FC<ProblemBoxProps> = ({
         >
           <PopoverArrow bg="#282828" />
           <PopoverHeader borderBottomWidth={0}>
-            <Button
-              rightIcon={<ArrowForwardIcon />}
-              colorScheme={buttonColorScheme}
-              variant={attemptingState === "Solved" ? "outline" : "solid"}
-              _hover={{
-                textColor: attemptingState === "Solved" ? "white" : "",
-              }}
-              width="100%"
-              mb={3}
-              onClick={handleButtonClick}
-            >
-              {buttonText}
-            </Button>
+            {status === "authenticated" ? (
+              <Button
+                rightIcon={<ArrowForwardIcon />}
+                colorScheme={buttonColorScheme}
+                variant={attemptingState === "Solved" ? "outline" : "solid"}
+                _hover={{
+                  textColor: attemptingState === "Solved" ? "white" : "",
+                }}
+                width="100%"
+                mb={3}
+                onClick={handleButtonClick}
+              >
+                {buttonText}
+              </Button>
+            ) : (
+              <></>
+            )}
             <TagsBox
               difficulty={difficulty}
               typeTags={tags}

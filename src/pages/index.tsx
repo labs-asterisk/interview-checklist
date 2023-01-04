@@ -10,15 +10,18 @@ import problems from "../data/real/final_data.json";
 import { type Problem, AttemptingState } from "../types/problem-data";
 
 import { trpc } from "../utils/trpc";
+import { useSession } from "next-auth/react";
 
 const ProblemsPage: NextPage = () => {
+  const { status } = useSession();
+
   const {
     isLoading,
     data: problemAttemptingStates,
     isError,
   } = trpc.attempt.getProblemAttemptingStates.useQuery();
 
-  if (isLoading)
+  if (status === "authenticated" && isLoading)
     return (
       <Layout title="Problems">
         <Flex minH="100vh" alignItems="center" justifyContent="center">
@@ -27,7 +30,8 @@ const ProblemsPage: NextPage = () => {
       </Layout>
     );
 
-  if (isError) return <div>Error in loading data</div>;
+  if (status === "authenticated" && isError)
+    return <div>Error in loading data</div>;
 
   return (
     <Layout title="Problems">
@@ -52,9 +56,23 @@ const ProblemsPage: NextPage = () => {
               my={4}
             >
               {problems.map((problem, j) => {
-                const userP = problemAttemptingStates.find(
-                  (obj) => obj.problemSlug === problem.slug
-                );
+                if (status === "unauthenticated") {
+                  return (
+                    <GridItem background="white" key={j}>
+                      <ProblemBox
+                        initAttemptingState={AttemptingState.Untouched}
+                        problem={problem as Problem}
+                      />
+                    </GridItem>
+                  );
+                }
+
+                let userP;
+                if (problemAttemptingStates) {
+                  userP = problemAttemptingStates.find(
+                    (obj) => obj.problemSlug === problem.slug
+                  );
+                }
 
                 let initAS = AttemptingState.Untouched;
                 if (userP) {
