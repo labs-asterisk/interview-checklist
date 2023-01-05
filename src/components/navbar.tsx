@@ -12,6 +12,8 @@ import {
 } from "@chakra-ui/react";
 import { CopyIcon, CheckIcon } from "@chakra-ui/icons";
 
+// import FilterMenu from "./filter";
+
 import { MdNoteAlt } from "react-icons/md";
 import { signIn, signOut, useSession } from "next-auth/react";
 
@@ -28,8 +30,6 @@ const navItems = [
 const Navbar: React.FC = () => {
   const { data, status } = useSession();
   const { onCopy, value, setValue, hasCopied } = useClipboard("");
-
-  // const sharingLink = "https://google.com";
 
   const { data: sharingLink } = trpc.view.getSharingLink.useQuery();
 
@@ -62,6 +62,8 @@ const Navbar: React.FC = () => {
             </Flex>
           </Link>
         ))}
+
+        {/* <FilterMenu /> */}
       </Flex>
 
       <Box width="100%">
