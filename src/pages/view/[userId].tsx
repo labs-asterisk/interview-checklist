@@ -91,6 +91,7 @@ const ViewPage: NextPage = () => {
                     <ProblemViewBox
                       initAttemptingState={initAS}
                       problem={problem as Problem}
+                      companyName={sectionName}
                     />
                   </GridItem>
                 );
