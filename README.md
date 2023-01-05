@@ -8,8 +8,7 @@ Making interview prep great again!
 - 📜 Company-specific lists
 
 ## Contributing
-
-
+The problem metadata is located [here](https://github.com/labs-asterisk/interview-checklist/blob/main/src/data/problem_data.json). All contributions are welcome! You can add functionality, edit the problem database, or make any other improvements. When you're done, [submit a pull request](https://github.com/labs-asterisk/interview-checklist/pulls)!
 
 ## Future Improvements
 - [ ] Filters for problems page - by difficulty and topic 
@@ -18,3 +17,6 @@ Making interview prep great again!
 - [ ] Make problem list more extensive (add problems from InterviewCake, InterviewBit etc.)
 - [ ] Enhance problem crowdsourcing
 - [ ] Add support for Google Authentication
+
+# License
+The code is licensed under the MIT license.
