@@ -7,6 +7,8 @@ import ProgressBar from "./progressBar";
 import { type Problem, AttemptingState } from "../types/problem-data";
 import { type UserProblem } from "@prisma/client";
 
+import { useSession } from "next-auth/react";
+
 import { trpc } from "../utils/trpc";
 
 interface ProblemGridProps {
@@ -22,13 +24,18 @@ const ProblemGrid: React.FC<ProblemGridProps> = ({
   userProbs,
   viewOnly,
 }) => {
+  const { status } = useSession();
+
   const {
     isLoading: isProgressLoading,
     data: progressData,
     isError: isProgressError,
-  } = trpc.view.getProgress.useQuery({
-    companyName: sectionName,
-  });
+  } = trpc.view.getProgress.useQuery(
+    {
+      companyName: sectionName,
+    },
+    { enabled: status === "authenticated" }
+  );
 
   if (!isProgressLoading) {
     console.log({ sectionName, progressData });

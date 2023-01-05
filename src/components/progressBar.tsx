@@ -6,10 +6,12 @@ import {
   PopoverTrigger,
   PopoverContent,
   PopoverArrow,
-  PopoverBody
+  PopoverBody,
 } from "@chakra-ui/react";
 import { trpc } from "../utils/trpc";
 import * as _ from "lodash";
+
+import { useSession } from "next-auth/react";
 
 import data from "../data/real/final_final_data.json";
 
@@ -19,7 +21,12 @@ type ProgressBarProps = {
 };
 
 const ProgressBar: React.FC<ProgressBarProps> = ({ company, userId }) => {
-  const solvedProblemsQuery = trpc.view.getSolvedSlugs.useQuery({ userId });
+  const { status } = useSession();
+
+  const solvedProblemsQuery = trpc.view.getSolvedSlugs.useQuery(
+    { userId },
+    { enabled: status === "unauthenticated" }
+  );
   const [solvedSlugs, setSolvedSlugs] = React.useState<
     { problemSlug: string; status: string }[]
   >([]);
@@ -46,7 +53,13 @@ const ProgressBar: React.FC<ProgressBarProps> = ({ company, userId }) => {
         rounded="full"
         overflow="hidden"
       >
-        <Popover isLazy trigger="hover" openDelay={10} closeDelay={10} placement='top'>
+        <Popover
+          isLazy
+          trigger="hover"
+          openDelay={10}
+          closeDelay={10}
+          placement="top"
+        >
           <PopoverTrigger>
             <Flex
               bg="#49a75e"
@@ -55,7 +68,7 @@ const ProgressBar: React.FC<ProgressBarProps> = ({ company, userId }) => {
                 String(
                   (solvedSlugs.filter((x) => x.status === "Solved").length /
                     companySlugs.length) *
-                  100
+                    100
                 ) + "%"
               }
             />
@@ -66,28 +79,39 @@ const ProgressBar: React.FC<ProgressBarProps> = ({ company, userId }) => {
             textColor="white"
             borderColor="#282828"
             userSelect="none"
-            w='auto'
+            w="auto"
           >
             <PopoverArrow bg="#282828" />
-            <PopoverBody alignItems='center'>
-              {"Solved: " + String(
-                (Math.round(solvedSlugs.filter((x) => x.status === "Solved").length /
-                  companySlugs.length *
-                  10000) / 100)
-              ) + "%"}
+            <PopoverBody alignItems="center">
+              {"Solved: " +
+                String(
+                  Math.round(
+                    (solvedSlugs.filter((x) => x.status === "Solved").length /
+                      companySlugs.length) *
+                      10000
+                  ) / 100
+                ) +
+                "%"}
             </PopoverBody>
           </PopoverContent>
         </Popover>
-        <Popover isLazy trigger="hover" openDelay={10} closeDelay={10} placement='top'>
+        <Popover
+          isLazy
+          trigger="hover"
+          openDelay={10}
+          closeDelay={10}
+          placement="top"
+        >
           <PopoverTrigger>
             <Flex
               bg="#b8daff"
               height="100%"
               width={
                 String(
-                  (solvedSlugs.filter((x) => x.status === "Unimplemented").length /
+                  (solvedSlugs.filter((x) => x.status === "Unimplemented")
+                    .length /
                     companySlugs.length) *
-                  100
+                    100
                 ) + "%"
               }
             />
@@ -98,19 +122,30 @@ const ProgressBar: React.FC<ProgressBarProps> = ({ company, userId }) => {
             textColor="white"
             borderColor="#282828"
             userSelect="none"
-            w='auto'
+            w="auto"
           >
             <PopoverArrow bg="#282828" />
-            <PopoverBody alignItems='center'>
-              {"Unimplemented: " + String(
-                (Math.round(solvedSlugs.filter((x) => x.status === "Unimplemented").length /
-                  companySlugs.length *
-                  10000) / 100)
-              ) + "%"}
+            <PopoverBody alignItems="center">
+              {"Unimplemented: " +
+                String(
+                  Math.round(
+                    (solvedSlugs.filter((x) => x.status === "Unimplemented")
+                      .length /
+                      companySlugs.length) *
+                      10000
+                  ) / 100
+                ) +
+                "%"}
             </PopoverBody>
           </PopoverContent>
         </Popover>
-        <Popover isLazy trigger="hover" openDelay={10} closeDelay={10} placement='top'>
+        <Popover
+          isLazy
+          trigger="hover"
+          openDelay={10}
+          closeDelay={10}
+          placement="top"
+        >
           <PopoverTrigger>
             <Flex
               bg="#ffeeba"
@@ -119,7 +154,7 @@ const ProgressBar: React.FC<ProgressBarProps> = ({ company, userId }) => {
                 String(
                   (solvedSlugs.filter((x) => x.status === "Attempting").length /
                     companySlugs.length) *
-                  100
+                    100
                 ) + "%"
               }
             />
@@ -130,24 +165,32 @@ const ProgressBar: React.FC<ProgressBarProps> = ({ company, userId }) => {
             textColor="white"
             borderColor="#282828"
             userSelect="none"
-            w='auto'
+            w="auto"
           >
             <PopoverArrow bg="#282828" />
-            <PopoverBody alignItems='center'>
-              {"Attempting: " + String(
-                (Math.round(solvedSlugs.filter((x) => x.status === "Attempting").length /
-                  companySlugs.length *
-                  10000) / 100)
-              ) + "%"}
+            <PopoverBody alignItems="center">
+              {"Attempting: " +
+                String(
+                  Math.round(
+                    (solvedSlugs.filter((x) => x.status === "Attempting")
+                      .length /
+                      companySlugs.length) *
+                      10000
+                  ) / 100
+                ) +
+                "%"}
             </PopoverBody>
           </PopoverContent>
         </Popover>
-        <Popover isLazy trigger="hover" openDelay={10} closeDelay={10} placement='top'>
+        <Popover
+          isLazy
+          trigger="hover"
+          openDelay={10}
+          closeDelay={10}
+          placement="top"
+        >
           <PopoverTrigger>
-            <Flex
-              bg="gray.200"
-              height="100%"
-              flex={1} />
+            <Flex bg="gray.200" height="100%" flex={1} />
           </PopoverTrigger>
           <PopoverContent
             p={1}
@@ -155,17 +198,19 @@ const ProgressBar: React.FC<ProgressBarProps> = ({ company, userId }) => {
             textColor="white"
             borderColor="#282828"
             userSelect="none"
-            w='auto'
+            w="auto"
           >
             <PopoverArrow bg="#282828" />
-            <PopoverBody alignItems='center'>
-              {"Unsolved: " + String(
-                (Math.round(
-                  (companySlugs.length - solvedSlugs.length) /
-                    companySlugs.length *
-                    10000)
-                  / 100)
-              ) + "%"}
+            <PopoverBody alignItems="center">
+              {"Unsolved: " +
+                String(
+                  Math.round(
+                    ((companySlugs.length - solvedSlugs.length) /
+                      companySlugs.length) *
+                      10000
+                  ) / 100
+                ) +
+                "%"}
             </PopoverBody>
           </PopoverContent>
         </Popover>

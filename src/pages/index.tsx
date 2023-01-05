@@ -22,7 +22,9 @@ const ProblemsPage: NextPage = () => {
     isLoading,
     data: problemAttemptingStates,
     isError,
-  } = trpc.attempt.getProblemAttemptingStates.useQuery();
+  } = trpc.attempt.getProblemAttemptingStates.useQuery(null, {
+    enabled: status === "authenticated",
+  });
 
   if (status === "authenticated" && isLoading)
     return (
@@ -38,7 +40,7 @@ const ProblemsPage: NextPage = () => {
 
   return (
     <Layout title="Problems">
-      {(status === "authenticated") ?
+      {status === "authenticated" ? (
         <Flex justifyContent="space-between" userSelect="none">
           <Text
             ml={16}
@@ -49,7 +51,12 @@ const ProblemsPage: NextPage = () => {
           >{`${data?.user?.name}'s Checklist`}</Text>
           <ProblemCounts />
         </Flex>
-      : <></>}
+      ) : (
+        <></>
+      )}
+
+      {status === "unauthenticated" ? <Box pt={10} /> : <></>}
+
       <Box p={8} pt={0}>
         {problems.sections.map(({ sectionName, problems }, i) => {
           // const {

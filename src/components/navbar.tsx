@@ -33,7 +33,9 @@ const Navbar: React.FC = () => {
   const { data, status } = useSession();
   const { onCopy, value, setValue, hasCopied } = useClipboard("");
 
-  const { data: sharingLink } = trpc.view.getSharingLink.useQuery();
+  const { data: sharingLink } = trpc.view.getSharingLink.useQuery(null, {
+    enabled: status === "authenticated",
+  });
 
   return (
     <Flex
@@ -109,7 +111,7 @@ const Navbar: React.FC = () => {
                   {data.user?.name}
                 </Text>
                 <Text fontSize="sm" color="gray.300">
-                  {_.truncate((data.user?.email as string), {"length": 25})}
+                  {_.truncate(data.user?.email as string, { length: 25 })}
                 </Text>
               </Flex>
             </Flex>
