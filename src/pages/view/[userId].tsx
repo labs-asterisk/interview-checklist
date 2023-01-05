@@ -45,15 +45,17 @@ const ViewPage: NextPage = () => {
   // if (isError) return <div>Error in loading data</div>;
   return (
     <Layout title="Problems">
-      <Text
-        ml={16}
-        mt={8}
-        fontSize="4xl"
-        fontWeight="bold"
-        color="gray.700"
-      >{`${data?.user.name}'s Checklist`}</Text>
-      <Box p={8} pt={0}>
+      <Flex justifyContent="space-between">
+        <Text
+          ml={16}
+          mt={8}
+          fontSize="4xl"
+          fontWeight="bold"
+          color="gray.700"
+        >{`${data?.user?.name}'s Checklist`}</Text>
         <ProblemCounts userId={userId as string} />
+      </Flex>
+      <Box p={8} pt={0}>
         {problems.sections.map(({ sectionName, problems }, i) => (
           <Box
             p={8}

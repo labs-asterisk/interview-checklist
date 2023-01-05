@@ -48,7 +48,7 @@ const ProblemsPage: NextPage = () => {
         >{`${data?.user?.name}'s Checklist`}</Text>
         <ProblemCounts />
       </Flex>
-      <Box p={8}>
+      <Box p={8} pt={0}>
         {problems.sections.map(({ sectionName, problems }, i) => {
           // const {
           //   isLoading: isProgressLoading,
