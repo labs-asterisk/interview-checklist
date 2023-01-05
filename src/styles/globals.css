@@ -9,3 +9,7 @@ body,
   overflow-y: hidden;
   overflow-x: hidden;
 }
+
+li[role="option"] {
+  color: black !important;
+}

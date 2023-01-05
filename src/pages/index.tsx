@@ -7,15 +7,16 @@ import Layout from "../components/layout";
 import ProblemGrid from "../components/problemGrid";
 import ProblemCounts from "../components/problemCounts";
 
-import problems from "../data/problem_data.json"
-
 import { type Problem, AttemptingState } from "../types/problem-data";
 
 import { trpc } from "../utils/trpc";
 import { useSession } from "next-auth/react";
 import { UserProblem } from "@prisma/client";
+import { useAtom } from "jotai";
+import { problemsAtom } from "../utils/store";
 
 const ProblemsPage: NextPage = () => {
+  const [problems] = useAtom(problemsAtom);
   const { data, status } = useSession();
 
   const {

@@ -12,7 +12,8 @@ import {
 } from "@chakra-ui/react";
 import { CopyIcon, CheckIcon } from "@chakra-ui/icons";
 
-// import FilterMenu from "./filter";
+import TopicFilterMenu from "./topicFilter";
+import DifficultyFilterMenu from "./difficultyFilter";
 
 import { MdNoteAlt } from "react-icons/md";
 import { signIn, signOut, useSession } from "next-auth/react";
@@ -67,7 +68,8 @@ const Navbar: React.FC = () => {
           </Link>
         ))}
 
-        {/* <FilterMenu /> */}
+        <TopicFilterMenu />
+        <DifficultyFilterMenu />
       </Flex>
 
       <Box width="100%">
