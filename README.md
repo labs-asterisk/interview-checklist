@@ -1,4 +1,4 @@
-# Interview Checklist
+# Interview Checklist [![GitHub license](https://img.shields.io/badge/license-MIT-blue)](https://github.com/labs-asterisk/interview-checklist/blob/main/LICENSE)
 
 Making interview prep great again!
 
