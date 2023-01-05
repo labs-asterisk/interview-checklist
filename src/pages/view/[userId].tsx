@@ -12,6 +12,7 @@ import problems from "../../data/real/final_final_data.json";
 import { type Problem, AttemptingState } from "../../types/problem-data";
 
 import { trpc } from "../../utils/trpc";
+import ProgressBar from "../../components/progressBar";
 
 const ViewPage: NextPage = () => {
   const router = useRouter();
@@ -64,6 +65,8 @@ const ViewPage: NextPage = () => {
             <Text fontSize="2xl" fontWeight="bold" color="gray.700">
               {sectionName}
             </Text>
+
+            <ProgressBar company={sectionName} userId={userId as string} />
 
             <Grid
               templateColumns="repeat(10, 1fr)"

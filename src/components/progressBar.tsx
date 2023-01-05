@@ -15,10 +15,11 @@ import data from "../data/real/final_final_data.json";
 
 type ProgressBarProps = {
   company: string;
+  userId?: string;
 };
 
-const ProgressBar: React.FC<ProgressBarProps> = ({ company }) => {
-  const solvedProblemsQuery = trpc.view.getSolvedSlugs.useQuery();
+const ProgressBar: React.FC<ProgressBarProps> = ({ company, userId }) => {
+  const solvedProblemsQuery = trpc.view.getSolvedSlugs.useQuery({ userId });
   const [solvedSlugs, setSolvedSlugs] = React.useState<
     { problemSlug: string; status: string }[]
   >([]);

@@ -8,16 +8,18 @@ import _ from "lodash";
 import data from "../../../data/real/final_final_data.json";
 
 export const viewRouter = router({
-  getSolvedSlugs: protectedProcedure.query(async ({ ctx }) => {
-    const { id: userId } = ctx.session.user;
+  getSolvedSlugs: protectedProcedure
+    .input(z.object({ userId: z.string().optional() }))
+    .query(async ({ ctx, input }) => {
+      const userId = input.userId || ctx.session.user.id;
 
-    return await ctx.prisma.userProblem.findMany({
-      where: {
-        NOT: { attemptingState: "Untouched" as AttemptingState },
-        userId,
-      },
-    });
-  }),
+      return await ctx.prisma.userProblem.findMany({
+        where: {
+          NOT: { attemptingState: "Untouched" as AttemptingState },
+          userId,
+        },
+      });
+    }),
   getProgress: protectedProcedure
     .input(z.object({ companyName: z.string() }))
     .query(async ({ ctx, input }) => {
