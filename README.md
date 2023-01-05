@@ -2,6 +2,10 @@
 
 Making interview prep great again!
 
+
+https://user-images.githubusercontent.com/37767310/210790032-970e677b-90a9-45fa-ae53-ccc47b501e8c.mp4
+
+
 ## Features
 - 📊 Easy progress tracking
 - 🔗 One-click link sharing
