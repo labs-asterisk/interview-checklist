@@ -20,6 +20,7 @@ specifiers:
   '@typescript-eslint/eslint-plugin': ^5.33.0
   '@typescript-eslint/parser': ^5.33.0
   autoprefixer: ^10.4.7
+  chakra-multiselect: ^0.3.7
   eslint: ^8.26.0
   eslint-config-next: 13.1.1
   framer-motion: ^8.0.2
@@ -54,6 +55,7 @@ dependencies:
   '@trpc/react-query': 10.7.0_x4ie6nhblo2vtx2aafrgzlfqy4
   '@trpc/server': 10.7.0
   '@types/lodash': 4.14.191
+  chakra-multiselect: 0.3.7_xd7wtw4aap7fcubmgw5xd24gfa
   framer-motion: 8.0.2_biqbaboplfbrettd7655fr4n2y
   jotai: 1.12.1_react@18.2.0
   lodash: 4.17.21
@@ -2162,6 +2164,26 @@ packages:
 
   /caniuse-lite/1.0.30001441:
     resolution: {integrity: sha512-OyxRR4Vof59I3yGWXws6i908EtGbMzVUi3ganaZQHmydk1iwDhRnvaPG2WaR0KcqrDFKrxVZHULT396LEPhXfg==}
+
+  /chakra-multiselect/0.3.7_xd7wtw4aap7fcubmgw5xd24gfa:
+    resolution: {integrity: sha512-yyTF629WAWK3KJsOZvKleMZSVUwT6SJ4flEzTdxrgIKLR5DElPV0HSzS3XEIOA5hRVW/TY9r2PP1DzVxIfSgig==}
+    engines: {node: '>=14'}
+    peerDependencies:
+      '@chakra-ui/react': '>=2'
+      '@chakra-ui/react-utils': '>=2'
+      '@chakra-ui/theme-tools': '>=2'
+      '@chakra-ui/utils': '>=2'
+      '@emotion/react': '>=11'
+      '@emotion/styled': '>=11'
+      framer-motion: '>=7'
+      react: '>=18.0.0'
+    dependencies:
+      '@chakra-ui/react': 2.4.6_xcb2icnvjeltjpmlq3fhxstwhm
+      '@emotion/react': 11.10.5_kzbn2opkn2327fwg5yzwzya5o4
+      '@emotion/styled': 11.10.5_qvatmowesywn4ye42qoh247szu
+      framer-motion: 8.0.2_biqbaboplfbrettd7655fr4n2y
+      react: 18.2.0
+    dev: false
 
   /chalk/2.4.2:
     resolution: {integrity: sha512-Mti+f9lpJNcwF4tWV8/OrTTtF1gZi+f8FqlyAdouralcFWFQWF2+NgCHShjkCb+IFBLq9buZwE1xckQU4peSuQ==}
