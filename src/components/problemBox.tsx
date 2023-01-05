@@ -142,6 +142,7 @@ const ProblemBox: React.FC<ProblemBoxProps> = ({
               width="100%"
               mb={3}
               onClick={handleButtonClick}
+              isLoading={mut.isLoading}
             >
               {buttonText}
             </Button>
