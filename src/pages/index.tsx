@@ -22,7 +22,7 @@ const ProblemsPage: NextPage = () => {
     isLoading,
     data: problemAttemptingStates,
     isError,
-  } = trpc.attempt.getProblemAttemptingStates.useQuery(null, {
+  } = trpc.attempt.getProblemAttemptingStates.useQuery(undefined, {
     enabled: status === "authenticated",
   });
 

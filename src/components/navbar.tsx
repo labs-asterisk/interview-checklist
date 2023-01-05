@@ -33,7 +33,7 @@ const Navbar: React.FC = () => {
   const { data, status } = useSession();
   const { onCopy, value, setValue, hasCopied } = useClipboard("");
 
-  const { data: sharingLink } = trpc.view.getSharingLink.useQuery(null, {
+  const { data: sharingLink } = trpc.view.getSharingLink.useQuery(undefined, {
     enabled: status === "authenticated",
   });
 
