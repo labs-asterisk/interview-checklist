@@ -11,12 +11,15 @@ import {
   Box,
   Text,
   Flex,
+  Button,
   Popover,
   PopoverTrigger,
   PopoverContent,
   PopoverArrow,
   PopoverHeader,
 } from "@chakra-ui/react";
+
+import { ArrowForwardIcon } from "@chakra-ui/icons";
 
 import { trpc } from "../utils/trpc";
 
@@ -73,6 +76,24 @@ const ProblemBox: React.FC<ProblemBoxProps> = ({
       : attemptingState === "Unimplemented"
       ? "#b8daff"
       : "#c3e6cb";
+  
+  const buttonColorScheme =
+      attemptingState === "Untouched"
+        ? "yellow"
+        : attemptingState === "Attempting"
+        ? "blue"
+        : attemptingState === "Unimplemented"
+        ? "green"
+        : "gray";
+  
+  const buttonText =
+    attemptingState === "Untouched"
+      ? "Start Solving"
+      : attemptingState === "Attempting"
+      ? "Implement Solution"
+      : attemptingState === "Unimplemented"
+      ? "Finish Implementation"
+      : "Reset";
 
   return (
     <>
@@ -88,7 +109,7 @@ const ProblemBox: React.FC<ProblemBoxProps> = ({
             alignItems="center"
             justifyContent="center"
             zIndex={1}
-            p={2}
+            p={3}
             bgColor={bgColor}
           >
             <Text
@@ -114,6 +135,20 @@ const ProblemBox: React.FC<ProblemBoxProps> = ({
         >
           <PopoverArrow bg="#282828" />
           <PopoverHeader borderBottomWidth={0}>
+            <Button
+              rightIcon={<ArrowForwardIcon />}
+              colorScheme={buttonColorScheme}
+              variant={attemptingState === "Solved" ? "outline" : "solid"}
+              width="100%"
+              mb={3}
+              onClick={() =>
+                setAttemptingState(
+                  attemptingStates[nextAsIdx] as AttemptingState
+                )
+              }
+            >
+              {buttonText}
+            </Button>
             <TagsBox
               difficulty={difficulty}
               typeTags={tags}

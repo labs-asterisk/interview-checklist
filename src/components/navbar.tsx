@@ -17,6 +17,8 @@ import { signIn, signOut, useSession } from "next-auth/react";
 
 import { trpc } from "../utils/trpc";
 
+import * as _ from "lodash";
+
 const navItems = [
   {
     title: "Problems",
@@ -105,7 +107,7 @@ const Navbar: React.FC = () => {
                   {data.user?.name}
                 </Text>
                 <Text fontSize="sm" color="gray.300">
-                  {data.user?.email}
+                  {_.truncate((data.user?.email as string), {"length": 25})}
                 </Text>
               </Flex>
             </Flex>

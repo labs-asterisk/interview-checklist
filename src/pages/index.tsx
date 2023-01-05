@@ -5,7 +5,7 @@ import GridLoader from "react-spinners/GridLoader";
 import Layout from "../components/layout";
 // import ProblemBox from "../components/problemBox";
 import ProblemGrid from "../components/problemGrid";
-import OverallProgressBar from "../components/overallProgressBar";
+import ProblemCounts from "../components/problemCounts";
 
 import problems from "../data/real/final_final_data.json";
 
@@ -16,7 +16,7 @@ import { useSession } from "next-auth/react";
 import { UserProblem } from "@prisma/client";
 
 const ProblemsPage: NextPage = () => {
-  const { status } = useSession();
+  const { data, status } = useSession();
 
   const {
     isLoading,
@@ -38,8 +38,17 @@ const ProblemsPage: NextPage = () => {
 
   return (
     <Layout title="Problems">
-      <Box p={8}>
-        { status === "authenticated" ? <OverallProgressBar /> : null}
+      <Flex justifyContent="space-between">
+        <Text
+          ml={16}
+          mt={8}
+          fontSize="4xl"
+          fontWeight="bold"
+          color="gray.700"
+        >{`${data?.user?.name}'s Checklist`}</Text>
+        <ProblemCounts />
+      </Flex>
+      <Box p={8} pt={0}>
         {problems.sections.map(({ sectionName, problems }, i) => {
           // const {
           //   isLoading: isProgressLoading,
