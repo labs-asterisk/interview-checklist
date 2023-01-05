@@ -46,7 +46,7 @@ const ProblemGrid: React.FC<ProblemGridProps> = ({
         {sectionName}
       </Text>
 
-      <ProgressBar company={sectionName} />
+      {viewOnly ? <></> : <ProgressBar company={sectionName} />}
 
       <Grid
         templateColumns="repeat(10, 1fr)"

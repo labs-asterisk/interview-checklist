@@ -38,16 +38,18 @@ const ProblemsPage: NextPage = () => {
 
   return (
     <Layout title="Problems">
-      <Flex justifyContent="space-between">
-        <Text
-          ml={16}
-          mt={8}
-          fontSize="4xl"
-          fontWeight="bold"
-          color="gray.700"
-        >{`${data?.user?.name}'s Checklist`}</Text>
-        <ProblemCounts />
-      </Flex>
+      {(status === "authenticated") ?
+        <Flex justifyContent="space-between" userSelect="none">
+          <Text
+            ml={16}
+            mt={8}
+            fontSize="4xl"
+            fontWeight="bold"
+            color="gray.700"
+          >{`${data?.user?.name}'s Checklist`}</Text>
+          <ProblemCounts />
+        </Flex>
+      : <></>}
       <Box p={8} pt={0}>
         {problems.sections.map(({ sectionName, problems }, i) => {
           // const {
