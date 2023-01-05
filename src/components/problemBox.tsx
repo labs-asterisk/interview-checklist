@@ -76,16 +76,16 @@ const ProblemBox: React.FC<ProblemBoxProps> = ({
       : attemptingState === "Unimplemented"
       ? "#b8daff"
       : "#c3e6cb";
-  
+
   const buttonColorScheme =
-      attemptingState === "Untouched"
-        ? "yellow"
-        : attemptingState === "Attempting"
-        ? "blue"
-        : attemptingState === "Unimplemented"
-        ? "green"
-        : "gray";
-  
+    attemptingState === "Untouched"
+      ? "yellow"
+      : attemptingState === "Attempting"
+      ? "blue"
+      : attemptingState === "Unimplemented"
+      ? "green"
+      : "gray";
+
   const buttonText =
     attemptingState === "Untouched"
       ? "Start Solving"
@@ -97,7 +97,7 @@ const ProblemBox: React.FC<ProblemBoxProps> = ({
 
   return (
     <>
-      <Popover isLazy trigger="hover" openDelay={10} closeDelay={10}>
+      <Popover isLazy trigger="hover" openDelay={30} closeDelay={30}>
         <PopoverTrigger>
           <Flex
             onClick={handleButtonClick}
@@ -141,11 +141,7 @@ const ProblemBox: React.FC<ProblemBoxProps> = ({
               variant={attemptingState === "Solved" ? "outline" : "solid"}
               width="100%"
               mb={3}
-              onClick={() =>
-                setAttemptingState(
-                  attemptingStates[nextAsIdx] as AttemptingState
-                )
-              }
+              onClick={handleButtonClick}
             >
               {buttonText}
             </Button>
