@@ -5,6 +5,7 @@ import GridLoader from "react-spinners/GridLoader";
 import Layout from "../components/layout";
 // import ProblemBox from "../components/problemBox";
 import ProblemGrid from "../components/problemGrid";
+import OverallProgressBar from "../components/overallProgressBar";
 
 import problems from "../data/real/final_final_data.json";
 
@@ -38,6 +39,7 @@ const ProblemsPage: NextPage = () => {
   return (
     <Layout title="Problems">
       <Box p={8}>
+        { status === "authenticated" ? <OverallProgressBar /> : null}
         {problems.sections.map(({ sectionName, problems }, i) => {
           // const {
           //   isLoading: isProgressLoading,
