@@ -52,6 +52,7 @@ const ViewPage: NextPage = () => {
           fontSize="4xl"
           fontWeight="bold"
           color="gray.700"
+          userSelect="none"
         >{`${data?.user?.name}'s Checklist`}</Text>
         <ProblemCounts userId={userId as string} />
       </Flex>

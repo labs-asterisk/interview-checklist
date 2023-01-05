@@ -43,14 +43,16 @@ const ProblemCounts: React.FC<OverallProgressBarProps> = ({ userId }) => {
           pt={2}
           pb={2}
         >
-          <Text fontSize="xl">
+          <Text fontSize="xl" userSelect="none">
             {String(
               solvedSlugs.filter(
                 (x) => x.status === "Unimplemented" || x.status === "Solved"
               ).length
             )}
           </Text>
-          <Text fontSize="md">Total Solved</Text>
+          <Text fontSize="md" userSelect="none">
+            Total Solved
+          </Text>
         </Flex>
         <Flex
           flexDirection="column"
@@ -63,12 +65,14 @@ const ProblemCounts: React.FC<OverallProgressBarProps> = ({ userId }) => {
           pt={2}
           pb={2}
         >
-          <Text fontSize="xl">
+          <Text fontSize="xl" userSelect="none">
             {String(
               solvedSlugs.filter((x) => x.status === "Attempting").length
             )}
           </Text>
-          <Text fontSize="md">Total Attempting</Text>
+          <Text fontSize="md" userSelect="none">
+            Total Attempting
+          </Text>
         </Flex>
       </Flex>
     </>
