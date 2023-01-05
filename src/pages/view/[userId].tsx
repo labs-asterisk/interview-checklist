@@ -8,7 +8,7 @@ import Layout from "../../components/layout";
 import ProblemViewBox from "../../components/problemViewBox";
 
 import problems from "../../data/real/final_final_data.json";
-import OverallProgressBar from "../../components/overallProgressBar"
+import ProblemCounts from "../../components/problemCounts";
 
 import { type Problem, AttemptingState } from "../../types/problem-data";
 
@@ -53,7 +53,7 @@ const ViewPage: NextPage = () => {
         color="gray.700"
       >{`${data?.user.name}'s Checklist`}</Text>
       <Box p={8} pt={0}>
-        <OverallProgressBar userId={userId as string} />
+        <ProblemCounts userId={userId as string} />
         {problems.sections.map(({ sectionName, problems }, i) => (
           <Box
             p={8}
