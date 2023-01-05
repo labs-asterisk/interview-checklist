@@ -5,7 +5,7 @@ import { TRPCError } from "@trpc/server";
 
 import _ from "lodash";
 
-import data from "../../../data/real/final_final_data.json";
+import data from "../../../data/problem_data.json"
 
 import { AttemptingState } from "../../../types/problem-data";
 

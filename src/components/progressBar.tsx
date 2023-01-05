@@ -13,7 +13,7 @@ import * as _ from "lodash";
 
 import { useSession } from "next-auth/react";
 
-import data from "../data/real/final_final_data.json";
+import data from "../data/problem_data.json"
 
 type ProgressBarProps = {
   company: string;

@@ -1,6 +1,6 @@
 import { Select } from "@chakra-ui/react";
 
-import filterTags from "../data/real/filter_tags.json";
+import filterTags from "../data/filter_tags.json";
 
 function toPascalCase(s: string) {
   return `${s}`

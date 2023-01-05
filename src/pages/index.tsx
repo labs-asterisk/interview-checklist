@@ -7,7 +7,7 @@ import Layout from "../components/layout";
 import ProblemGrid from "../components/problemGrid";
 import ProblemCounts from "../components/problemCounts";
 
-import problems from "../data/real/final_final_data.json";
+import problems from "../data/problem_data.json"
 
 import { type Problem, AttemptingState } from "../types/problem-data";
 
