@@ -42,7 +42,7 @@ const ProblemViewBox: React.FC<ProblemViewBoxProps> = ({
 
   return (
     <>
-      <Popover isLazy trigger="hover" openDelay={10} closeDelay={10}>
+      <Popover isLazy trigger="hover" openDelay={10} closeDelay={800}>
         <PopoverTrigger>
           <Flex
             position="relative"
