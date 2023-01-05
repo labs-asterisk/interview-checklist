@@ -7,11 +7,13 @@ import _ from "lodash";
 
 import data from "../../../data/real/final_final_data.json";
 
+import { AttemptingState } from "../../../types/problem-data";
+
 export const viewRouter = router({
   getSolvedSlugs: publicProcedure
     .input(z.object({ userId: z.string().optional() }))
     .query(async ({ ctx, input }) => {
-      const userId = input.userId || ctx.session.user.id;
+      const userId = input.userId || ctx.session?.user?.id;
 
       return await ctx.prisma.userProblem.findMany({
         where: {
@@ -65,6 +67,7 @@ export const viewRouter = router({
         sectionName: companyName,
       });
 
+      // @ts-ignore
       const allProbsCount = filteredProbs[0].problems.length;
 
       console.log({ allProbsCount, solvingProbsCount, solvedProbsCount });

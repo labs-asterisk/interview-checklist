@@ -17,10 +17,12 @@ function toPascalCase(s: string) {
 const FilterMenu = () => {
   return (
     <Select placeholder="Filter" borderColor="gray.200">
-      {Object.entries(filterTags).map(([category, tags]) => (
-        <optgroup label={toPascalCase(category)}>
-          {Object.entries(tags).map(([tag, occ]) => (
-            <option value={tag}>{`${toPascalCase(tag)} (${occ})`}</option>
+      {Object.entries(filterTags).map(([category, tags], i) => (
+        <optgroup label={toPascalCase(category)} key={i}>
+          {Object.entries(tags).map(([tag, occ], j) => (
+            <option value={tag} key={j}>{`${toPascalCase(
+              tag
+            )} (${occ})`}</option>
           ))}
         </optgroup>
       ))}
