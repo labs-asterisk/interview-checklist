@@ -43,6 +43,7 @@ const Navbar: React.FC = () => {
       <a
         href="https://github.com/labs-asterisk/interview-checklist"
         target="_blank"
+        rel="noreferrer"
         className="github-corner"
         aria-label="View source on GitHub">
         <svg
@@ -163,6 +164,7 @@ const Navbar: React.FC = () => {
             <a
               style={{ width: "100%" }}
               href="https://www.producthunt.com/posts/interview-checklist?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-interview&#0045;checklist"
+              rel="noreferrer"
               target="_blank">
               <img
                 src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=373822&theme=dark"
