@@ -1,6 +1,8 @@
 // @ts-nocheck
 import { Select } from "@chakra-ui/react";
 import { MultiSelect, useMultiSelect } from "chakra-multiselect";
+import { Box, Text } from "@chakra-ui/react";
+
 import { useAtom } from "jotai";
 import { useState } from "react";
 
@@ -39,33 +41,38 @@ const TopicFilterMenu = () => {
   const [value, setValue] = useState<string[]>([]);
 
   return (
-    <MultiSelect
-      onChange={(_value) => {
-        const _topics =
-          _value.length === 0
-            ? filterTopicsOptions.map((option) => option.value)
-            : _value;
-        console.log({ _topics });
-        setProblems({
-          sections: problems.sections.map((section) => ({
-            ...section,
-            problems: section.problems.filter(
-              (problem) =>
-                problem.tags.some((tag) => _topics.includes(tag)) &&
-                filterDifficulties.includes(problem.difficulty)
-            ),
-          })),
-        });
-        setFilterTopics(_topics);
-        setValue(_value);
-      }}
-      value={value}
-      label="Filter Topicwise"
-      borderColor="gray.200"
-      backgroundColor="black"
-      textColor="black"
-      options={filterTopicsOptions}
-    />
+    <Box>
+      <Text my={1} fontSize="sm" fontWeight="bold">
+        By Topic
+      </Text>
+      <MultiSelect
+        onChange={(_value) => {
+          const _topics =
+            _value.length === 0
+              ? filterTopicsOptions.map((option) => option.value)
+              : _value;
+          console.log({ _topics });
+          setProblems({
+            sections: problems.sections.map((section) => ({
+              ...section,
+              problems: section.problems.filter(
+                (problem) =>
+                  problem.tags.some((tag) => _topics.includes(tag)) &&
+                  filterDifficulties.includes(problem.difficulty)
+              ),
+            })),
+          });
+          setFilterTopics(_topics);
+          setValue(_value);
+        }}
+        value={value}
+        // label="Filter Topicwise"
+        borderColor="gray.200"
+        backgroundColor="black"
+        textColor="black"
+        options={filterTopicsOptions}
+      />
+    </Box>
   );
 };
 

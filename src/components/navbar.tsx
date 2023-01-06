@@ -20,7 +20,7 @@ import { signIn, signOut, useSession } from "next-auth/react";
 
 import { trpc } from "../utils/trpc";
 
-import * as _ from "lodash";
+import _ from "lodash";
 
 const navItems = [
   {
@@ -68,8 +68,13 @@ const Navbar: React.FC = () => {
           </Link>
         ))}
 
-        <TopicFilterMenu />
-        <DifficultyFilterMenu />
+        <Box bgColor="#323e59" p={3} borderRadius="5px">
+          <Text fontSize="md" fontWeight="bold">
+            Filter
+          </Text>
+          <TopicFilterMenu />
+          <DifficultyFilterMenu />
+        </Box>
       </Flex>
 
       <Box width="100%">

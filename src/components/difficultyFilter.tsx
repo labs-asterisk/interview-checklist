@@ -1,6 +1,8 @@
 // @ts-nocheck
 import { Select } from "@chakra-ui/react";
 import { MultiSelect, useMultiSelect } from "chakra-multiselect";
+import { Box, Text } from "@chakra-ui/react";
+
 import { useAtom } from "jotai";
 import { useState } from "react";
 
@@ -40,32 +42,36 @@ const DifficultyFilterMenu = () => {
   const [value, setValue] = useState<string[]>([]);
 
   return (
-    <MultiSelect
-      onChange={(_value) => {
-        const _difficulty =
-          _value.length === 0
-            ? filterDifficultyOptions.map((option) => option.value)
-            : _value;
-        setProblems({
-          sections: problems.sections.map((section) => ({
-            ...section,
-            problems: section.problems.filter(
-              (problem) =>
-                problem.tags.some((tag) => filterTopics.includes(tag)) &&
-                _difficulty.includes(problem.difficulty)
-            ),
-          })),
-        });
-        setFilterDifficulty(_difficulty);
-        setValue(_value);
-      }}
-      value={value}
-      label="Filter Difficulty"
-      borderColor="gray.200"
-      backgroundColor="black"
-      textColor="black"
-      options={filterDifficultyOptions}
-    />
+    <Box>
+      <Text my={1} fontSize="sm" fontWeight="bold">
+        By Difficulty
+      </Text>
+      <MultiSelect
+        onChange={(_value) => {
+          const _difficulty =
+            _value.length === 0
+              ? filterDifficultyOptions.map((option) => option.value)
+              : _value;
+          setProblems({
+            sections: problems.sections.map((section) => ({
+              ...section,
+              problems: section.problems.filter(
+                (problem) =>
+                  problem.tags.some((tag) => filterTopics.includes(tag)) &&
+                  _difficulty.includes(problem.difficulty)
+              ),
+            })),
+          });
+          setFilterDifficulty(_difficulty);
+          setValue(_value);
+        }}
+        value={value}
+        // label="Filter Difficulty"
+        backgroundColor="black"
+        textColor="black"
+        options={filterDifficultyOptions}
+      />
+    </Box>
   );
 };
 
