@@ -22,6 +22,7 @@
     "@trpc/react-query": "^10.0.0",
     "@trpc/server": "^10.0.0",
     "@types/lodash": "^4.14.191",
+    "@vercel/analytics": "^0.1.6",
     "chakra-multiselect": "^0.3.7",
     "framer-motion": "^8.0.2",
     "jotai": "^1.12.1",
